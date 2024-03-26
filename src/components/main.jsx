@@ -47,6 +47,19 @@ export default function Main({ data }) {
       setSett(true)
     }
   }
+
+  useEffect(()=>{
+  async function getData(){
+    const respon=await fetch(`/api/all/alldata`,{method:"GET",headers:{"content-type":"application/json"},cache:"no-store"})
+  const data=await respon.json();
+  if(data['status']==="success"){
+  addToCvData(data['data']);
+  }else{
+    return addToCvData([]);
+  }
+  }
+  getData();
+  },[])
   useEffect(()=>{
     if(sett){
       settingRef.current.classList.replace("-right-[250px]","-right-[0px]")
@@ -55,11 +68,15 @@ export default function Main({ data }) {
     }
   },[sett])
   function resizeFun() {
+   if(select){
     allRef.current.scrollLeft = allRef.current.clientWidth * manageScroll;
+   }else{
+    return;
+   }
   }
-  useEffect(() => {
-    addToCvData(data);
-  }, []);
+  // useEffect(() => {
+  //   addToCvData(data);
+  // }, []);
   useEffect(()=>{
     window.addEventListener("resize", resizeFun);
     return () => {
