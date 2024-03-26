@@ -50,7 +50,7 @@ export default function Main({ data }) {
 
   useEffect(()=>{
   async function getData(){
-    const respon=await fetch(`/api/all/alldata`,{method:"GET",headers:{"content-type":"application/json"},cache:"no-store"})
+    const respon=await fetch(`/api/all/alldata`,{method:"POST",headers:{"content-type":"application/json"},cache:"no-store"})
   const data=await respon.json();
   console.log(data);
   if(data['status']==="success"){
