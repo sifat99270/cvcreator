@@ -52,6 +52,7 @@ export default function Main({ data }) {
   async function getData(){
     const respon=await fetch(`/api/all/alldata`,{method:"GET",headers:{"content-type":"application/json"},cache:"no-store"})
   const data=await respon.json();
+  console.log(data);
   if(data['status']==="success"){
   addToCvData(data['data']);
   }else{
