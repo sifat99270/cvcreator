@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model user {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(20)
+  email    String   @unique
+  password String
+  otp      String
+  main     main[]
+  createAt   DateTime @default(now()) @db.Timestamp()
+  updateAt   DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+model main {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar(50)
+  profile    profile?
+  experience experience[]
+  education  education[]
+  skills     skills[]
+  summary    summary?
+  hobbies    hobbies[]
+  reference  reference[]
+  useId      Int
+  user       user         @relation(references: [id], fields: [useId], onDelete: Restrict, onUpdate: Cascade)
+  createAt     DateTime     @default(now()) @db.Timestamp()
+  updateAt     DateTime     @default(now()) @updatedAt @db.Timestamp()
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum Married {
+  Single
+  Married
+}
+
+model profile {
+  id          Int      @id @default(autoincrement())
+  name        String
+  gender      Gender   @default(Male)
+  birth       String
+  married     Married  @default(Single)
+  profession  String
+  address     String
+  city        String
+  state       String
+  nationality String
+  phone       String
+  email       String
+  mainId      Int      @unique
+  main        main     @relation(references: [id], fields: [mainId], onUpdate: Cascade, onDelete: Restrict)
+  createAt      DateTime @default(now()) @db.Timestamp()
+  updateAt      DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model experience {
+  id       Int      @id @default(autoincrement())
+  title    String
+  employer String
+  city     String
+  state    String
+  start    String
+  end      String
+  mainId   Int
+  main     main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt   DateTime @default(now()) @db.Timestamp()
+  updateAt   DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model education {
+  id         Int      @id @default(autoincrement())
+  school     String
+  city       String
+  state      String
+  degree     String
+  studyfield String
+  start      String
+  end        String
+  mainId     Int
+  main       main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt     DateTime @default(now()) @db.Timestamp()
+  updateAt     DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+enum Level {
+  Beginners
+  Intermediate
+  Expert
+}
+
+model skills {
+  id     Int      @id @default(autoincrement())
+  skill  String
+  level  Level    @default(Beginners)
+  mainId Int
+  main   main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt DateTime @default(now()) @db.Timestamp()
+  updateAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model summary {
+  id     Int      @id @default(autoincrement())
+  text   String   @db.Text
+  mainId Int      @unique
+  main   main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt DateTime @default(now()) @db.Timestamp()
+  updateAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model hobbies {
+  id     Int      @id @default(autoincrement())
+  name   String
+  mainId Int
+  main   main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt DateTime @default(now()) @db.Timestamp()
+  updateAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
+
+model reference {
+  id          Int      @id @default(autoincrement())
+  name        String
+  position    String
+  mobile      String
+  email       String
+  companyName String
+  mainId      Int
+  main        main     @relation(references: [id], fields: [mainId], onDelete: Restrict, onUpdate: Cascade)
+  createAt      DateTime @default(now()) @db.Timestamp()
+  updateAt      DateTime @default(now()) @updatedAt @db.Timestamp()
+}

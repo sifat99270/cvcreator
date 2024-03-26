@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+
+@layer utilities {
+  .cal{
+    left: calc(var(--i)*100%);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .loader {
+    display: flex;
+    animation: loaderani 1s linear infinite;
+  }
+  @keyframes loaderani {
+    0% {
+      transform: rotate(0deg);
+      scale: 0.75;
+    }
+    75% {
+      scale: 1.5;
+    }
+    100% {
+      transform: rotate(360deg);
+      scale: 0.75;
+    }
+  }
+  
+}
