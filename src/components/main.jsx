@@ -65,7 +65,7 @@ export default function Main({ data }) {
     return () => {
       window.removeEventListener("resize", resizeFun);
     };
-  },[])
+  },[manageScroll])
  
   function scrollProfile(i) {
     allRef.current.scrollLeft = allRef.current.clientWidth * i;
@@ -82,6 +82,7 @@ export default function Main({ data }) {
     setColor(i);
     dontDisturb.current.style.pointerEvents = "auto";
   }
+ 
 function bgBox(e){
 bgBoxRef.current.childNodes.forEach((item)=>{
 if(item.classList.contains("scale-50")){
@@ -351,35 +352,35 @@ async function logout(){
       </div>
       <div
         ref={allRef}
-        className=" transition-all  bg-white  mt-2 md:mt-10  md:ml-4 relative h-screen  md:h-[85vh] top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]"
+        className=" flex transition-all  bg-white  mt-2 md:mt-10  md:ml-4 relative h-screen  md:h-[85vh] top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]"
       >
         {load ? <Load /> : null}
-        <div style={{"--i":0}} className=" cal  absolute left-0  top-0   w-full  ">
+        <div style={{"--i":0}} className="  left-0  top-0   w-full min-w-[100%]  ">
           <CV pageno={setManageScroll} setSelect={setSelect} scrollLeft={scrollProfile} all={cvdata} />
         </div>
-        <div  style={{"--i":1}}  className=" cal absolute   top-0 w-full  bg-white ">
+        <div  style={{"--i":1}}  className=" min-w-[100%]    top-0 w-full  bg-white ">
           <Profile pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div style={{"--i":2}} className=" cal absolute  top-0   w-full bg-white ">
+        <div style={{"--i":2}} className=" min-w-[100%]   top-0   w-full bg-white ">
           <Experience
             index={select ? select[1] : null}
             pageno={setManageScroll}
             scrollLeft={scrollLeft}
           />
         </div>
-        <div style={{"--i":3}} className="cal absolute  top-0   w-full bg-white ">
+        <div style={{"--i":3}} className=" min-w-[100%]  top-0   w-full bg-white ">
           <Education pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div style={{"--i":4}} className=" cal absolute  top-0   w-full bg-white ">
+        <div style={{"--i":4}} className="  min-w-[100%] top-0   w-full bg-white ">
           <Skills pageno={setManageScroll} scrollleft={scrollLeft} />
         </div>
-        <div style={{"--i":5}} className=" cal absolute  top-0   w-full bg-white">
+        <div style={{"--i":5}} className="  min-w-[100%] top-0   w-full bg-white">
           <Summary pageno={setManageScroll} scrollleft={scrollLeft} />
         </div>
-        <div style={{"--i":6}} className=" cal absolute  top-0   w-full bg-white">
+        <div style={{"--i":6}} className=" min-w-[100%]  top-0   w-full bg-white">
           <Hobbies pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div style={{"--i":7}} className=" cal absolute top-0  w-full bg-white ">
+        <div style={{"--i":7}} className=" min-w-[100%] top-0  w-full bg-white ">
           <Reference pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
       </div>
