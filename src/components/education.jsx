@@ -16,12 +16,13 @@ export default function Education({
   scrollLeft,
   pageno,
 }) {
-  const {select,updateArray,deleteArray,dataUpdateArray}=alldata((state)=>{
+  const {select,updateArray,deleteArray,dataUpdateArray,mode}=alldata((state)=>{
     return{
       updateArray:state.updateArray,
       select:state.select,
       deleteArray:state.deleteArray,
-      dataUpdateArray:state.dataUpdateArray
+      dataUpdateArray:state.dataUpdateArray,
+      mode:state.mode
     }
   })
   const [obj, setObj] = useState({
@@ -221,11 +222,11 @@ export default function Education({
     setLoad(false);
   }
   return (
-    <div className="  flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300 ">
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm `}>
             <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2" ><Load /></div>
       <div
         ref={scaleRef}
-        className="  absolute scale-0 flex flex-col justify-center items-center bg-sky-100 p-2 shadow-lg h-[100px] shadow-gray-300 rounded-md w-[300px]"
+        className={`${mode==="dark"? " bg-neutral-500 shadow-gray-600":"bg-sky-100 shadow-gray-300"}  absolute scale-0 flex flex-col justify-center items-center  p-2 shadow-lg h-[100px]  rounded-md w-[300px]`}
       >
         <p>Do You Want To Delete This Item</p>
         <div className="  mt-3 flex justify-evenly items-center gap-4">
@@ -242,7 +243,7 @@ export default function Education({
           </div>
         </div>
       </div>
-      <div className=" rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center">
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} rounded-md mx-auto w-[90%]  p-3  flex justify-start gap-2 font-bold items-center`}>
         <div className=" text-2xl">
           <CiLight />
         </div>
@@ -258,26 +259,26 @@ export default function Education({
           return (
             <div
               key={item["id"]}
-              className=" mt-3 w-3/4 gap-2 mx-auto bg-white shadow-md shadow-gray-200 rounded-md p-2 flex justify-start items-center"
+              className={`${mode==='dark'?" bg-gray-600":"bg-white shadow-gray-200 "} mt-3 w-3/4 gap-2 mx-auto  shadow-md  rounded-md p-2 flex justify-start items-center`}
             >
               <div className=" w-1/2">
-                <div className=" font-bold text-sm text-violet-500 ">
+                <div className= {`${mode==="dark"?" text-gray-400":"text-violet-500"} font-bold text-sm `}>
                   <p className=" uppercase">{item['school']}</p>
                   <p className=" font-light">
                    {item['start']}-
-                    <span className="text-green-400"> {item['end']}</span>
+                    <span className={`${mode==="dark"?" text-slate-800":"text-green-400"}`}> {item['end']}</span>
                   </p>
                 </div>
               </div>
               <div className=" flex gap-3">
-                <div onClick={()=>{editting(ind)}} className=" py-1 text-black cursor-pointer px-2  bg-indigo-400 rounded-sm">
+                <div onClick={()=>{editting(ind)}} className={`${mode==="dark"?" bg-slate-900 text-gray-300":"bg-indigo-400 text-black"} py-1 cursor-pointer px-2   rounded-sm`}>
                   <MdEdit />
                 </div>
                 <div
                   onClick={()=>{
                     scaleUpDowns(ind)
                   }}
-                  className=" py-1 text-black cursor-pointer px-2 bg-purple-300 rounded-sm"
+                  className={`${mode==="dark"?" bg-neutral-800 text-gray-400":"text-black bg-purple-300"} py-1  cursor-pointer px-2  rounded-sm`}
                 >
                   <MdDelete />
                 </div>
@@ -295,7 +296,7 @@ export default function Education({
                 change("school", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none rounded-md font-bold `}
             />
           </div>
 
@@ -307,7 +308,7 @@ export default function Education({
                 change("city", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -318,7 +319,7 @@ export default function Education({
                 change("state", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -329,7 +330,7 @@ export default function Education({
                 change("degree", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -340,7 +341,7 @@ export default function Education({
                 change("studyfield", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -350,7 +351,7 @@ export default function Education({
                 change("start", e.target.value);
               }}
               type="date"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black w-full"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold  w-full`}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -361,7 +362,7 @@ export default function Education({
                 change("end", e.target.value);
               }}
               type="date"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black w-full"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none  rounded-md font-bold  w-full`}
             />
           </div>
         </div>
@@ -373,7 +374,7 @@ export default function Education({
               scrollLeft(4);
               pageno(4);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             NEXT
             <TbPlayerTrackNextFilled />
@@ -384,7 +385,7 @@ export default function Education({
           <div onClick={() => {}} className=" text-xs md:text-base  p-2 flex justify-start items-start">
             {load ? (
               <div><Load /></div>
-            ) : (update?<div className=" flex gap-4"> <button onClick={()=>{updates(obj['ind'])}}  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm">
+            ) : (update?<div className=" flex gap-4"> <button onClick={()=>{updates(obj['ind'])}}  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             <MdBrowserUpdated />
              Update
            </button> <button onClick={() => {
@@ -397,12 +398,12 @@ export default function Education({
                studyfield: "",
                start: "",
                end: "",})
-             }}  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm">
+             }}  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
            <HiPlusSm />
              Add Section
            </button></div>: allDatas.length<2 && <button
                 onClick={submit}
-                className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
               >
                 <FaSave />
                 SAVE
@@ -416,7 +417,7 @@ export default function Education({
               onClick={() => {
                 setDecition(true);
               }}
-              className=" bg-cyan-400 text-white flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
             >
               <HiPlusSm />
               Add Secton
@@ -429,7 +430,7 @@ export default function Education({
               scrollLeft(2);
               pageno(2);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             <TbPlayerTrackPrevFilled />
             Previous

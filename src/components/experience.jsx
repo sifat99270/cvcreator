@@ -32,12 +32,13 @@ export default function Experience({
   const [decition, setDecition] = useState(false);
   const [delIndex,setDelIndex]=useState(null);
   const loadRef=useRef();
-  const {select,updateArray,deleteArray,dataUpdateArray}=alldata((state)=>{
+  const {select,updateArray,deleteArray,dataUpdateArray,mode}=alldata((state)=>{
     return{
       updateArray:state.updateArray,
       select:state.select,
       deleteArray:state.deleteArray,
-      dataUpdateArray:state.dataUpdateArray
+      dataUpdateArray:state.dataUpdateArray,
+      mode:state.mode
     }
   })
   useEffect(() => {
@@ -212,11 +213,11 @@ export default function Experience({
     }
    }
   return (
-    <div className=' text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300 relative'>
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} text-sky-400 p-2 shadow-md rounded-sm  relative`}>
        <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2" ><Load /></div>
      <div
         ref={scaleRef}
-        className="  absolute scale-0 flex flex-col justify-center items-center bg-sky-100 p-2 shadow-lg h-[100px] shadow-gray-300 rounded-md w-[300px]"
+        className={`${mode==="dark"? " bg-neutral-500 shadow-gray-600":"bg-sky-100 shadow-gray-300"}  absolute scale-0 flex flex-col justify-center items-center  p-2 shadow-lg h-[100px]  rounded-md w-[300px]`}
       >
         <p>Do You Want To Delete This Item</p>
         <div className="  mt-3 flex justify-evenly items-center gap-4">
@@ -233,37 +234,8 @@ export default function Experience({
           </div>
         </div>
       </div>
-      {allDatas instanceof Array && allDatas.length>0 && allDatas.map((item,ind)=>{
-        return(<div
-           key={item["id"]}
-          className=" mt-3 w-3/4 gap-2 mx-auto bg-white shadow-md shadow-gray-200 rounded-md p-2 flex justify-start items-center"
-        >
-          <div className=" w-1/2">
-            <div className=" font-bold text-sm text-violet-500 ">
-              <p className=" uppercase">{item['title']}</p>
-              <p className=" font-light">
-                {item['start']} -
-                <span className="text-green-400"> {item['end']}</span>
-              </p>
-            </div>
-          </div>
-          <div className=" flex gap-3">
-            <div onClick={()=>{editting(ind)}} className=" py-1 text-black cursor-pointer px-2  bg-indigo-400 rounded-sm">
-              <MdEdit />
-            </div>
-            <div
-              onClick={()=>{
-                scaleUpDowns(ind)
-              }}
-              className=" py-1 text-black cursor-pointer px-2 bg-purple-300 rounded-sm"
-            >
-              <MdDelete />
-            </div>
-          </div>
-        </div>)
-      })}
-      
-      <div className=' rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center'>
+     
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} rounded-md mx-auto w-[90%]  p-3 flex justify-start gap-2 font-bold items-center`}>
         <div className=' text-2xl'>
           {" "}
           <CiLight />
@@ -274,6 +246,35 @@ export default function Experience({
           We&apos;ll suggest bullet points that make a great impression
         </p>
       </div>
+      {allDatas instanceof Array && allDatas.length>0 && allDatas.map((item,ind)=>{
+        return(<div
+           key={item["id"]}
+          className={`${mode==='dark'?" bg-gray-600":"bg-white shadow-gray-200 "} mt-3 w-3/4 gap-2 mx-auto  shadow-md  rounded-md p-2 flex justify-start items-center`}
+        >
+          <div className=" w-1/2">
+            <div className={`${mode==="dark"?" text-gray-400":"text-violet-500"} font-bold text-sm  `}>
+              <p className=" uppercase">{item['title']}</p>
+              <p className=" font-light">
+                {item['start']} -
+                <span className={`${mode==="dark"?" text-slate-800":"text-green-400"}`}> {item['end']}</span>
+              </p>
+            </div>
+          </div>
+          <div className=" flex gap-3">
+            <div onClick={()=>{editting(ind)}} className={` ${mode==="dark"?" bg-slate-900 text-gray-300":"bg-indigo-400 text-black"} py-1  cursor-pointer px-2   rounded-sm`}>
+              <MdEdit />
+            </div>
+            <div
+              onClick={()=>{
+                scaleUpDowns(ind)
+              }}
+              className={` ${mode==="dark"?" bg-neutral-800 text-gray-400":"text-black bg-purple-300"} py-1  cursor-pointer px-2  rounded-sm`}
+            >
+              <MdDelete />
+            </div>
+          </div>
+        </div>)
+      })}
    {decition?   <div className=' flex flex-wrap justify-center items-center'>
         <div className=' w-[300px] p-2'>
           <p className=' py-2'>Job Title</p>
@@ -283,7 +284,7 @@ export default function Experience({
               change("title", e.target.value);
             }}
             type='text'
-            className=' border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
        
@@ -295,7 +296,7 @@ export default function Experience({
               change("city", e.target.value);
             }}
             type='text'
-            className=' border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -306,7 +307,7 @@ export default function Experience({
               change("state", e.target.value);
             }}
             type='text'
-            className=' border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -316,7 +317,7 @@ export default function Experience({
               change("start", e.target.value);
             }}
             type='date'
-            className=' border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black w-full'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold w-full`}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -326,7 +327,7 @@ export default function Experience({
               change("end", e.target.value);
             }}
             type='date'
-            className=' border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black w-full'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold  w-full`}
           />
         </div>
         <div className=' min-w-[90%] p-2'>
@@ -337,7 +338,7 @@ export default function Experience({
               change("employer", e.target.value);
             }}
             type='text'
-            className=' w-full border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black'
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} w-full border  p-[8px] outline-none 0 rounded-md font-bold `}
           />
         </div>
       </div>:null}
@@ -348,14 +349,14 @@ export default function Experience({
               scrollLeft(3);
               pageno(3);
             }}
-            className=' bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm'>
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}   flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             NEXT
             <TbPlayerTrackNextFilled />
           </button>
         </div>
         <div className=' text-xs md:text-base md:w-[300px] p-2'>
           {load ? (
-            <div className=' w-[100px] flex justify-center items-center bg-rose-300 h-[50px] rounded-md'>
+            <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  w-[100px] flex justify-center items-center h-[50px] rounded-md`}>
               {" "}
               <Load />
             </div>
@@ -364,25 +365,26 @@ export default function Experience({
               <div onClick={() => {}} className=" text-xs md:text-base  p-2 flex justify-start items-start">
                 {load ? (
                   <div><Load /></div>
-                ) : (update?<div className=" flex gap-4"> <button onClick={()=>{updates(obj['ind'])}}  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm">
+                ) : (update?<div className=" flex gap-4"> <button onClick={()=>{updates(obj['ind'])}}  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
                 <MdBrowserUpdated />
                  Update
                </button> <button onClick={() => {
                  setUpdate(false)
                    setDecition(true);
-                   setObj({ school: "",
-                   degree: "",
-                   city: "",
-                   state: "",
-                   studyfield: "",
-                   start: "",
-                   end: "",})
-                 }}  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm">
+                   setObj({
+                    title: "",
+                    employer: "",
+                    city: "",
+                    state: "",
+                    start: "",
+                    end: "",
+                  })
+                 }}  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
                <HiPlusSm />
                  Add Section
                </button></div>: allDatas.length<2 && <button
                     onClick={submit}
-                    className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                    className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
                   >
                     <FaSave />
                     SAVE
@@ -395,8 +397,9 @@ export default function Experience({
                 <button
                   onClick={() => {
                     setDecition(true);
+                    
                   }}
-                  className=" bg-cyan-400 text-white flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"}    flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
                 >
                   <HiPlusSm />
                   Add Secton
@@ -411,7 +414,7 @@ export default function Experience({
               scrollLeft(1);
               pageno(1);
             }}
-            className=' bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm'>
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}   flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             <TbPlayerTrackPrevFilled />
             Previous
           </button>

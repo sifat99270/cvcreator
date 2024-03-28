@@ -22,13 +22,14 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
     });
   }
   const [load,setLoad]=useState(false);
-  const {select,updateArray,deleteArray,dataUpdateArray,cvdata}=alldata((state)=>{
+  const {select,updateArray,deleteArray,dataUpdateArray,cvdata,mode}=alldata((state)=>{
     return{
       updateArray:state.updateArray,
       select:state.select,
       deleteArray:state.deleteArray,
       dataUpdateArray:state.dataUpdateArray,
-      cvdata:state.cvdata
+      cvdata:state.cvdata,
+      mode:state.mode
     }
   })
   useEffect(() => {
@@ -76,6 +77,7 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
         success("hobbie updated")
        
         dataUpdateArray(data['data'],select[1],"hobbies",i);
+        setObj( cvdata[select[1]]['hobbies']);
       }else{
         error("hobbie update fail")
       }
@@ -112,10 +114,10 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
     }
 
   return (
-    <div className=" text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300 relative">
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} text-sky-400 p-2 shadow-md rounded-sm  relative`}>
 
 <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2" ><Load/></div>
-      <div className=" rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center">
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} rounded-md mx-auto w-[90%] 0 p-3  flex justify-start gap-2 font-bold items-center`}>
         <div className=" text-2xl">
           {" "}
           <CiLight />
@@ -144,7 +146,7 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
                       change("name", e.target.value, index);
                     }}
                     type="text"
-                    className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+                    className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
                   />
                      {item['id'] &&  <div
                         onClick={() => {
@@ -169,7 +171,7 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
         })}
      { obj instanceof Array && obj.length<3 &&  <div
         onClick={add}
-        className=" mx-auto mt-3 cursor-pointer p-2 flex rounded-md shadow-md shadow-gray-200 bg-slate-300 w-[300px]  justify-center items-center gap-2"
+        className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-slate-300 shadow-gray-200 "} mx-auto mt-3 cursor-pointer p-2 flex rounded-md shadow-md   w-[300px]  justify-center items-center gap-2`}
       >
         <FaCirclePlus />
         <p>Add More Hobbies</p>
@@ -181,7 +183,7 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
               pageno(7);
               scrollLeft(7);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             NEXT
             <TbPlayerTrackNextFilled />
@@ -194,7 +196,7 @@ export default function Hobbies({ data, pageno, scrollLeft }) {
               pageno(5);
               scrollLeft(5);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             <TbPlayerTrackPrevFilled />
             Previous

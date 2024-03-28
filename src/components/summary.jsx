@@ -14,11 +14,12 @@ export default function Summary({ scrollleft, pageno }) {
     text: "",
   });
   const [updateDec, setUpdateDec] = useState(false);
-  const { select, updateObject, cvdata } = alldata((state) => {
+  const { select, updateObject, cvdata,mode } = alldata((state) => {
     return {
       updateObject: state.updateObject,
       select: state.select,
       cvdata: state.cvdata,
+      mode:state.mode
     };
   });
   useEffect(() => {
@@ -89,8 +90,8 @@ export default function Summary({ scrollleft, pageno }) {
     setLoad(false);
   }
   return (
-    <div className=" text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300">
-      <div className="  rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center">
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} text-sky-400 p-2 shadow-md rounded-sm `}>
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} rounded-md mx-auto w-[90%] p-3 t flex justify-start gap-2 font-bold items-center`}>
         <div className=" text-2xl">
           {" "}
           <CiLight />
@@ -109,7 +110,7 @@ export default function Summary({ scrollleft, pageno }) {
               change("text", e.target.value);
             }}
             type="text"
-            className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black w-[90%] h-[300px] "
+            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "}  border  p-[8px] outline-none rounded-md font-bold  w-[90%] min-h-[300px]`}
           />
         </div>
       </div>
@@ -120,7 +121,7 @@ export default function Summary({ scrollleft, pageno }) {
               scrollleft(6);
               pageno(6);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             NEXT
             <TbPlayerTrackNextFilled />
@@ -134,7 +135,7 @@ export default function Summary({ scrollleft, pageno }) {
           ) : updateDec ? (
             <button
               onClick={update}
-              className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
             >
               <FaSave />
               Update
@@ -142,7 +143,7 @@ export default function Summary({ scrollleft, pageno }) {
           ) : (
             <button
               onClick={submit}
-              className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
             >
               <FaSave />
               SAVE
@@ -155,7 +156,7 @@ export default function Summary({ scrollleft, pageno }) {
               scrollleft(4);
               pageno(4);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             <TbPlayerTrackPrevFilled />
             Previous

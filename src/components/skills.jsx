@@ -21,7 +21,7 @@ export default function Skills({ pageno, scrollleft }) {
       setObj(list);
     });
   }
-  const { select, updateArray, deleteArray, dataUpdateArray, cvdata } = alldata(
+  const { select, updateArray, deleteArray, dataUpdateArray, cvdata ,mode} = alldata(
     (state) => {
       return {
         updateArray: state.updateArray,
@@ -29,6 +29,7 @@ export default function Skills({ pageno, scrollleft }) {
         deleteArray: state.deleteArray,
         dataUpdateArray: state.dataUpdateArray,
         cvdata: state.cvdata,
+        mode:state.mode
       };
     }
   );
@@ -83,6 +84,7 @@ export default function Skills({ pageno, scrollleft }) {
           if (data["status"] === "success") {
             success("skill updated");
             dataUpdateArray(data["data"], select[1], "skills", i);
+            setObj(cvdata[select[1]]["skills"]);
           } else {
             error("exprience update fail");
           }
@@ -120,11 +122,11 @@ export default function Skills({ pageno, scrollleft }) {
     }
   }
   return (
-    <div className=" text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300 relative ">
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} text-sky-400 p-2 shadow-md rounded-sm  relative `}>
       <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2">
         <Load />
       </div>
-      <div className=" rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center">
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} rounded-md mx-auto w-[90%]  p-3  flex justify-start gap-2 font-bold items-center`}>
         <div className=" text-2xl">
           {" "}
           <CiLight />
@@ -151,7 +153,7 @@ export default function Skills({ pageno, scrollleft }) {
                     change("skill", e.target.value, index);
                   }}
                   type="text"
-                  className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+                  className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
                 />
               </div>
 
@@ -163,20 +165,20 @@ export default function Skills({ pageno, scrollleft }) {
                     onChange={(e) => {
                       change("level", e.target.value, index);
                     }}
-                    className=" w-full outline-none border border-indigo-400 p-[8px] rounded-md font-bold text-black "
+                    className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} w-full outline-none border  p-[8px] rounded-md font-bold `}
                   >
                     <option>Beginners</option>
                     <option>Intermediate</option>
                     <option>Expert</option>
                   </select>
-                  <div
+                 {item['id'] &&  <div
                     onClick={() => {
                       del(index);
                     }}
                     className=" cursor-pointer text-2xl"
                   >
                     <MdDelete />
-                  </div>
+                  </div>}
                   <div
                     onClick={() => {
                       submit(index);
@@ -190,13 +192,13 @@ export default function Skills({ pageno, scrollleft }) {
             </div>
           );
         })}
-      <div
+      {obj instanceof Array && obj.length<3 && <div
         onClick={add}
-        className=" mx-auto mt-3 cursor-pointer p-2 flex shadow-md shadow-gray-200 w-[300px] rounded-md bg-slate-300 justify-center items-center gap-2"
+        className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-slate-300 shadow-gray-200 "} mx-auto mt-3 cursor-pointer p-2 flex shadow-md  w-[300px] rounded-md  justify-center items-center gap-2`}
       >
         <FaCirclePlus />
         <p>Add More Skills</p>
-      </div>
+      </div>}
       <div className=" flex justify-evenly flex-row-reverse p-3">
         <div className=" text-xs md:text-base p-2">
           <button
@@ -204,7 +206,7 @@ export default function Skills({ pageno, scrollleft }) {
               pageno(5);
               scrollleft(5);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             NEXT
             <TbPlayerTrackNextFilled />
@@ -216,7 +218,7 @@ export default function Skills({ pageno, scrollleft }) {
               scrollleft(3);
               pageno(3);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className= {`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             <TbPlayerTrackPrevFilled />
             Previous

@@ -2,6 +2,7 @@ import { data } from "autoprefixer";
 import { create } from "zustand";
 
 export const alldata = create((set) => ({
+  mode:"light",
   cvdata: [],
   select: [],
   addToCvData: (data) => {
@@ -10,6 +11,14 @@ export const alldata = create((set) => ({
         cvdata: data,
       };
     });
+  },
+  setMode:(name)=>{
+set((pre)=>{
+  pre.mode=name;
+  return{
+    ...pre
+  }
+})
   },
   updateObject: (data, i, name) => {
  

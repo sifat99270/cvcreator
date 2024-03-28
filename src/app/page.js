@@ -20,7 +20,7 @@ export default async function Home() {
   // const all=await getAllData();
    return (
     <main className=" w-full" >
-     <Suspense fallback={<Load />}>
+     <Suspense fallback={<div className=" w-full h-screen flex justify-center items-center"><Load /></div>}>
      <Main  />
      </Suspense>
     </main>

@@ -31,7 +31,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
   const [delIndex, setDelIndex] = useState(null);
   const [test, setTest] = useState(false);
   const [generateCvData,setGenerateCvData]=useState({});
-  const { select, updateArray, deleteArray, dataUpdateArray, cvdata } = alldata(
+  const { select, updateArray, deleteArray, dataUpdateArray, cvdata,mode } = alldata(
     (state) => {
       return {
         updateArray: state.updateArray,
@@ -39,6 +39,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
         deleteArray: state.deleteArray,
         dataUpdateArray: state.dataUpdateArray,
         cvdata: state.cvdata,
+        mode:state.mode
       };
     }
   );
@@ -155,6 +156,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
       if (data["status"] === "success") {
         success("reference updated");
         dataUpdateArray(data["data"], select[1], "reference", track);
+        setAllData(cvdata[select[1]]["reference"]);
         setObj({
           name: "",
           position: "",
@@ -217,13 +219,13 @@ export default function Reference({ scrollLeft, data, pageno }) {
   setTest(true);
   }
   return (
-    <div className=" flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm shadow-slate-300">
+    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"}   flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm`}>
       <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2">
         <Load />
       </div>
       <div
         ref={scaleRef}
-        className="  absolute scale-0 flex flex-col justify-center items-center bg-sky-100 p-2 shadow-lg h-[100px] shadow-gray-300 rounded-md w-[300px]"
+        className={`${mode==="dark"? " bg-neutral-500 shadow-gray-600":"bg-sky-100 shadow-gray-300"}  absolute scale-0 flex flex-col justify-center items-center  p-2 shadow-lg h-[100px]  rounded-md w-[300px]`}
       >
         <p>Do You Want To Delete This Item</p>
         <div className="  mt-3 flex justify-evenly items-center gap-4">
@@ -243,7 +245,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
           </div>
         </div>
       </div>
-      <div className=" rounded-md mx-auto w-[90%] bg-cyan-400 p-3 text-white flex justify-start gap-2 font-bold items-center">
+      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"}  rounded-md mx-auto w-[90%] p-3 flex justify-start gap-2 font-bold items-center`}>
         <div className=" text-2xl">
           {" "}
           <CiLight />
@@ -260,13 +262,13 @@ export default function Reference({ scrollLeft, data, pageno }) {
           return (
             <div
               key={item["id"] ? item["id"] : i}
-              className=" mt-3 w-3/4 gap-2 mx-auto bg-white shadow-md shadow-gray-200 rounded-md p-2 flex justify-start items-center"
+              className={`${mode==='dark'?" bg-gray-600":"bg-white shadow-gray-200 "} mt-3 w-3/4 gap-2 mx-auto  shadow-md  rounded-md p-2 flex justify-start items-center`}
             >
               <div className=" w-1/2">
-                <div className=" font-bold text-sm text-violet-500 ">
+                <div className={`${mode==="dark"?" text-gray-400":"text-violet-500"} font-bold text-sm `}>
                   <p className=" font-bold uppercase ">{item['name']}</p>
                   <p className=" font-light">
-                    {item['companyName']}<span className="text-green-400"> {item['position']}</span>
+                    {item['companyName']}<span className={`${mode==="dark"?" text-slate-800":"text-green-400"}`}> {item['position']}</span>
                   </p>
                 </div>
               </div>
@@ -275,7 +277,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                   onClick={() => {
                     editting(i);
                   }}
-                  className=" py-1 text-black cursor-pointer px-2  bg-indigo-400 rounded-sm"
+                  className={`${mode==="dark"?" bg-slate-900 text-gray-300":"bg-indigo-400 text-black"} py-1 cursor-pointer px-2   rounded-sm`}
                 >
                   <MdEdit />
                 </div>
@@ -283,7 +285,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                   onClick={() => {
                     scaleUpDown(i);
                   }}
-                  className=" py-1 text-black cursor-pointer px-2 bg-purple-300 rounded-sm"
+                  className={`${mode==="dark"?" bg-neutral-800 text-gray-400":"text-black bg-purple-300"} py-1  cursor-pointer px-2  rounded-sm`}
                 >
                   <MdDelete />
                 </div>
@@ -301,7 +303,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 change("name", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
 
@@ -313,7 +315,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 change("position", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none f rounded-md font-bold `}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -324,7 +326,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 change("mobile", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none ounded-md font-bold`}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -335,7 +337,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 change("email", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold`}
             />
           </div>
           <div className=" w-[300px] p-2">
@@ -346,7 +348,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 change("companyName", e.target.value);
               }}
               type="text"
-              className=" border border-indigo-400 p-[8px] outline-none focus:border-indigo-600 rounded-md font-bold text-black"
+              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
         </div>
@@ -358,7 +360,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
               pageno(6);
               scrollLeft(6);
             }}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             <TbPlayerTrackPrevFilled />
             Previous
@@ -378,7 +380,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                   onClick={() => {
                     updates(obj["ind"]);
                   }}
-                  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
                 >
                   <MdBrowserUpdated />
                   Update
@@ -395,7 +397,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                       companyName: "",
                     });
                   }}
-                  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
                 >
                   <HiPlusSm />
                   Add Section
@@ -406,7 +408,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
                 {" "}
                 {allDatas.length<2 && <button
                   onClick={submit}
-                  className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
                 >
                   <FaSave />
                   Save
@@ -420,7 +422,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
               onClick={() => {
                 setDecition(true);
               }}
-              className=" bg-cyan-400 text-white flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
             >
               <HiPlusSm />
               Add Secton
@@ -430,7 +432,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
         <div className="  text-xs md:text-base p-2">
           <button
             onClick={genaratePdf}
-            className=" bg-rose-300 flex  py-1 px-2 items-center justify-center gap-1 rounded-sm"
+            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
           >
             FINISH
             <TbPlayerTrackNextFilled />

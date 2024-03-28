@@ -9,7 +9,7 @@ export  async function POST(req, res) {
     const body = await req.json();
     const name = body["name"];
     const gender = body["gender"];
-    const date = body["date"];
+    const birth = body["birth"];
     const married = body["married"];
     const profession = body["profession"];
     const address = body["address"];
@@ -27,7 +27,7 @@ export  async function POST(req, res) {
       data: {
         name: name,
         gender: gender,
-        birth: date,
+        birth: birth,
         married: married,
         profession: profession,
         address: address,
@@ -52,7 +52,7 @@ export  async function PUT(req, res) {
     const body = await req.json();
     const name = body["name"];
     const gender = body["gender"];
-    const date = body["date"];
+    const birth = body["birth"];
     const married = body["married"];
     const profession = body["profession"];
     const address = body["address"];
@@ -73,7 +73,7 @@ export  async function PUT(req, res) {
       data: {
         name: name,
         gender: gender,
-        birth: date,
+        birth: birth,
         married: married,
         profession: profession,
         address: address,
