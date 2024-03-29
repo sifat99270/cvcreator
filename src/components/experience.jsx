@@ -9,7 +9,7 @@ import { success, error } from "@/utility/toast";
 import { alldata } from "./store/allstore";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { verifyDate, verifyMonthDate, verifyName } from "./regex";
+import { verifyDate, verifyDescription, verifyMonthDate, verifyName } from "./regex";
 import { HiPlusSm } from "react-icons/hi";
 import { MdBrowserUpdated } from "react-icons/md";
 export default function Experience({
@@ -59,9 +59,10 @@ export default function Experience({
     }
   }, [select]);
   async function submit() {
+    setLoad(true);
     if(!verifyName(obj['title'])){
       error("set a valid title")
-    }else if(!verifyName(obj['employer'])){
+    }else if(!verifyDescription(obj['employer'])){
       error("set a valid employer")
     }else if(!verifyName(obj['city'])){
       error("set a valid city")
@@ -72,7 +73,7 @@ export default function Experience({
     }else if(!verifyDate(obj['end'])){
       error("set a valid  end date")
     }else{
-    setLoad(true);
+  
     const all = {
       ...obj,
       mainId: select[0]['id'],
@@ -105,8 +106,8 @@ export default function Experience({
     setLoad(true);
     if(!verifyName(obj['title'])){
       error("set a valid title")
-    }else if(!verifyName(obj['employer'])){
-      error("set a valid employer")
+    }else if(!verifyDescription(obj['employer'])){
+      error("set a valid description")
     }else if(!verifyName(obj['city'])){
       error("set a valid city")
     }else if(!verifyName(obj['state'])){
@@ -300,7 +301,7 @@ export default function Experience({
           />
         </div>
         <div className=' w-[300px] p-2'>
-          <p className=' py-2'>State</p>
+          <p className=' py-2'>company name</p>
           <input
             value={obj["state"]}
             onChange={e => {

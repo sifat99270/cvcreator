@@ -37,28 +37,26 @@ export default function Main({ data }) {
   const bgBoxRef = useRef();
   const router = useRouter();
   const [logLoad, setLogLoad] = useState(false);
-  const themeRef=useRef();
-  const settIngImgRef=useRef();
-  function theme(){
-    if(themeRef.current.classList.contains("active")){
-      themeRef.current.classList.remove('active')
-      setMode('light')
-    }else{
-      themeRef.current.classList.add('active')
-      setMode('dark')
+  const themeRef = useRef();
+  const settIngImgRef = useRef();
+  function theme() {
+    if (themeRef.current.classList.contains("active")) {
+      themeRef.current.classList.remove("active");
+      setMode("light");
+    } else {
+      themeRef.current.classList.add("active");
+      setMode("dark");
     }
   }
-  const { addToCvData, cvdata,setMode,mode ,setSelectCv } = alldata(
-    state => {
-      return {
-        addToCvData: state.addToCvData,
-        cvdata: state.cvdata,
-        setMode:state.setMode,
-        mode:state.mode,
-        setSelectCv:state.setSelectCv
-      };
-    }
-  );
+  const { addToCvData, cvdata, setMode, mode, setSelectCv } = alldata(state => {
+    return {
+      addToCvData: state.addToCvData,
+      cvdata: state.cvdata,
+      setMode: state.setMode,
+      mode: state.mode,
+      setSelectCv: state.setSelectCv,
+    };
+  });
   function setting() {
     if (sett) {
       setSett(false);
@@ -69,10 +67,10 @@ export default function Main({ data }) {
 
   function resizeFun() {
     if (select) {
-      allRef.current.childNodes.forEach((item)=>{
-        item.style.minWidth=`${allRef.current.clientWidth}px`
-      })
-     allRef.current.scrollLeft = allRef.current.clientWidth * manageScroll;
+      allRef.current.childNodes.forEach(item => {
+        item.style.minWidth = `${allRef.current.clientWidth}px`;
+      });
+      allRef.current.scrollLeft = allRef.current.clientWidth * manageScroll;
     } else {
       return;
     }
@@ -122,16 +120,15 @@ export default function Main({ data }) {
       dontDisturb.current.style.pointerEvents = "auto";
       return;
     }
-    allRef.current.childNodes.forEach((item,index)=>{
-      item.style.minWidth=`${allRef.current.clientWidth}px`
+    allRef.current.childNodes.forEach((item, index) => {
+      
+      item.style.minWidth = `${allRef.current.clientWidth}px`;
       if(i===index){
-        // item.style.height=`${item['childNodes'][0]['clientHeight']}px`
-        // // allRef.current.style.height=`${item['childNodes'][0]['clientHeight']}px`
-        // allRef.current.style.minHeight=`${item['childNodes'][0]['clientHeight']}px`
+        allRef.current.style.minHeight=`${item['childNodes'][0].clientHeight}px` 
       }
-    })
+    });
     allRef.current.scrollLeft = allRef.current.clientWidth * i;
- 
+
     allRef.current.scrollTop = 0;
     setColor(i);
     dontDisturb.current.style.pointerEvents = "auto";
@@ -158,31 +155,38 @@ export default function Main({ data }) {
     }
     setLogLoad(false);
   }
-  function settingImgScale(e,i){
-settIngImgRef.current.childNodes.forEach((item)=>{
-  if(item.classList.contains("scale-50")){
-    item.classList.replace("scale-50",'scale-100')
-  }
-}
-)
-if(e.target.classList.contains("scale-100")){
-  e.target.classList.replace("scale-100","scale-50");
-}else if(e.target.classList.contains("scale-50")){
-return;
-}else{
-  e.target.classList.add("scale-50")
-}
+  function settingImgScale(e, i) {
+    settIngImgRef.current.childNodes.forEach(item => {
+      if (item.classList.contains("scale-50")) {
+        item.classList.replace("scale-50", "scale-100");
+      }
+    });
+    if (e.target.classList.contains("scale-100")) {
+      e.target.classList.replace("scale-100", "scale-50");
+    } else if (e.target.classList.contains("scale-50")) {
+      return;
+    } else {
+      e.target.classList.add("scale-50");
+    }
 
-setSelectCv(i)
+    setSelectCv(i);
   }
   return (
     <div
       ref={dontDisturb}
-      className={` overflow-hidden relative w-full  ${
-        mode==="dark"?" bg-zinc-700" : !bgColor ? "bg-teal-300" : `${bgColor}`}
+      className={` overflow-x-hidden  relative w-full  ${
+        mode === "dark"
+          ? " bg-zinc-700"
+          : !bgColor
+          ? "bg-teal-300"
+          : `${bgColor}`
+      }
       } flex-row flex`}>
-      <div className={` ${mode==="dark"?" bg-slate-600 text-white":"bg-white"}  fixed top-0 z-50 md:hidden  w-full `}>
-        <div className=' w-full flex justify-center items-center  '>
+      <div
+        className={` ${
+          mode === "dark" ? " bg-slate-600 text-white" : "bg-white"
+        }  fixed top-0 z-50 md:hidden  w-full `}>
+        <div className=' w-[100%]  flex justify-center items-center  '>
           <div className=' ml-4'>
             <p className=' font-bold'>CV MAKER</p>
           </div>
@@ -194,23 +198,31 @@ setSelectCv(i)
             }}
             className={`${
               color === 0 ? "text-emerald-500" : null
-            } ml-auto w-[75px] h-[60px]  ${mode==="dark"?" bg-slate-600 text-white ":"bg-white"}   flex justify-center items-center text-2xl   hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            }   w-[75px] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 text-white " : "bg-white"
+            }   flex justify-center items-center text-2xl   hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <FaBarsStaggered />
           </div>
         </div>
         <hr className='  bg-gray-200 w-full h-[1px]' />
 
-        <div className={`${mode==="dark"?" text-white":" text-black"} flex justify-between`}>
+        <div
+          className={`${
+            mode === "dark" ? " text-white" : " text-black"
+          } flex justify-between`}>
           <div
             style={{ "--i": 1 }}
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(1);
               scrollLeft(1);
-              allRef.current.scrollTop = 0;
+             
             }}
             className={`${
               color === 1 ? "text-emerald-500" : null
-            }  w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            }  w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <AiFillProfile />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               profile
@@ -219,13 +231,16 @@ setSelectCv(i)
           <hr className='  w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(2);
               scrollLeft(2);
-              allRef.current.scrollTop = 0;
+              
             }}
             className={`${
               color === 2 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <MdOutlineWork />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               experience
@@ -234,13 +249,16 @@ setSelectCv(i)
           <hr className='  w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(3);
               scrollLeft(3);
-              allRef.current.scrollTop = 0;
+            
             }}
             className={`${
               color === 3 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <FaFile />
 
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
@@ -250,13 +268,16 @@ setSelectCv(i)
           <hr className=' w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(4);
               scrollLeft(4);
-              allRef.current.scrollTop = 0;
+           
             }}
             className={`${
               color === 4 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <GiSkills />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               skills
@@ -265,13 +286,16 @@ setSelectCv(i)
           <hr className='  w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(5);
               scrollLeft(5);
-              allRef.current.scrollTop = 0;
+            
             }}
             className={`${
               color === 5 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <MdOutlineSummarize />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               summary
@@ -280,13 +304,16 @@ setSelectCv(i)
           <hr className='  w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(6);
               scrollLeft(6);
-              allRef.current.scrollTop = 0;
+         
             }}
             className={`${
               color === 6 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <FaMedal />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               hobbies
@@ -295,13 +322,16 @@ setSelectCv(i)
           <hr className=' w-[1px] h-[60px] bg-red-200' />
           <div
             onClick={() => {
+              allRef.current.scrollTop = 0;
               setManageScroll(7);
               scrollLeft(7);
-              allRef.current.scrollTop = 0;
+            
             }}
             className={`${
               color === 7 ? "text-emerald-500" : null
-            } w-[14%] h-[60px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"}  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+            } w-[14%] h-[60px]  ${
+              mode === "dark" ? " bg-slate-600 " : "bg-white"
+            }  flex flex-col justify-center items-center text-2xl  p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
             <FaUser />
             <p style={{ fontSize: "8px" }} className=' text-xs font-bold p-1'>
               Reference
@@ -319,7 +349,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 0 ? "text-emerald-500" : null
-          } w-[75px] h-[75px] ${mode==="dark"?" bg-slate-600 ":"bg-white"}  mb-3 flex justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all `}>
+          } w-[75px] h-[75px] ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          }  mb-3 flex justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all `}>
           <FaBarsStaggered />
         </div>
         <div
@@ -329,7 +361,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 1 ? "text-emerald-500" : null
-          } w-[75px] h-[80px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[80px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <AiFillProfile />
           <p className=' text-xs font-bold p-1'>profile</p>
         </div>
@@ -341,7 +375,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 2 ? "text-emerald-500" : null
-          } w-[75px] h-[80px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[80px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <MdOutlineWork />
           <p className=' text-xs font-bold p-1'>experience</p>
         </div>
@@ -353,7 +389,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 3 ? "text-emerald-500" : null
-          } w-[75px] h-[80px]  ${mode==="dark"?" bg-slate-600  ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[80px]  ${
+            mode === "dark" ? " bg-slate-600  " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <FaFile />
           <p className=' text-xs font-bold p-1'>education</p>
         </div>
@@ -365,7 +403,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 4 ? "text-emerald-500" : null
-          } w-[75px] h-[80px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[80px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <GiSkills />
           <p className=' text-xs font-bold p-1'>skills</p>
         </div>
@@ -377,7 +417,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 5 ? "text-emerald-500" : null
-          } w-[75px] h-[75px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[75px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <MdOutlineSummarize />
           <p className=' text-xs font-bold p-1'>summary</p>
         </div>
@@ -389,7 +431,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 6 ? "text-emerald-500" : null
-          } w-[75px] h-[75px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[75px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <FaMedal />
           <p className=' text-xs font-bold p-1'>hobbies</p>
         </div>
@@ -401,7 +445,9 @@ setSelectCv(i)
           }}
           className={`${
             color === 7 ? "text-emerald-500" : null
-          } w-[75px] h-[75px]  ${mode==="dark"?" bg-slate-600 ":"bg-white"} flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
+          } w-[75px] h-[75px]  ${
+            mode === "dark" ? " bg-slate-600 " : "bg-white"
+          } flex flex-col justify-center items-center text-2xl rounded-sm p-2 hover:cursor-pointer hover:text-emerald-500 transition-all`}>
           <FaUser />
           <p className=' text-xs font-bold p-1'>Reference</p>
         </div>
@@ -409,11 +455,11 @@ setSelectCv(i)
       </div>
       <div
         ref={allRef}
-        className={`${mode==="dark"?" bg-gray-900":"bg-white"} flex   transition-all    mt-2 md:mt-10  md:ml-4 relative   top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]`}>
+        className={`${
+          mode === "dark" ? " bg-gray-900" : " bg-white"
+        } flex    transition-all    mt-2 md:mt-10  md:ml-4 relative  top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]`}>
         {load ? <Load /> : null}
-        <div
-          style={{ "--i": 0 }}
-          className='   left-0  top-0   w-full min-w-[100%] h-auto  '>
+        <div className='  min-w-[100%]  '>
           <CV
             pageno={setManageScroll}
             setSelect={setSelect}
@@ -421,52 +467,42 @@ setSelectCv(i)
             all={cvdata}
           />
         </div>
-        <div
-          style={{ "--i": 1 }}
-          className='  min-w-[100%]    top-0 w-full h-auto   '>
+        <div className='  min-w-[100%]     '>
           <Profile pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div
-          style={{ "--i": 2 }}
-          className=' min-w-[100%]   top-0   w-full  '>
+        <div className=' min-w-[100%]   '>
           <Experience
             index={select ? select[1] : null}
             pageno={setManageScroll}
             scrollLeft={scrollLeft}
           />
         </div>
-        <div
-          style={{ "--i": 3 }}
-          className=' min-w-[100%]  top-0   w-full  '>
+        <div className=' min-w-[100%]   '>
           <Education pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div
-          style={{ "--i": 4 }}
-          className='  min-w-[100%] top-0   w-full  '>
+        <div className='  min-w-[100%]   '>
           <Skills pageno={setManageScroll} scrollleft={scrollLeft} />
         </div>
-        <div
-          style={{ "--i": 5 }}
-          className='  min-w-[100%] top-0   w-full '>
+        <div className='  min-w-[100%]   '>
           <Summary pageno={setManageScroll} scrollleft={scrollLeft} />
         </div>
-        <div
-          style={{ "--i": 6 }}
-          className=' min-w-[100%]  top-0   w-full '>
+        <div className=' min-w-[100%]  '>
           <Hobbies pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
-        <div
-          style={{ "--i": 7 }}
-          className='  min-w-[100%] top-0  w-full  '>
+        <div className='  min-w-[100%]   '>
           <Reference pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
       </div>
       <div
         ref={settingRef}
-        className=' transition-all  absolute   -right-[250px] top-[100px] w-[300px]  flex'>
+        className=' pointer-events-none transition-all    fixed top-0 z-50  -right-[250px] md:top-[180px] w-[300px]  flex'>
         <div
           onClick={setting}
-          className={`${mode==="dark"?" bg-slate-900 shadow-gray-600 text-white":"shadow-slate-500 bg-white"}  shadow-md  rounded-sm  flex justify-center items-center text-2xl w-[50px] h-[50px]  rounded-l-md cursor-pointer`}>
+          className={`${
+            mode === "dark"
+              ? " bg-slate-900 shadow-gray-600 text-white"
+              : "shadow-slate-500 bg-white"
+          }  pointer-events-auto shadow-md  rounded-sm  flex justify-center items-center text-2xl w-[50px] h-[50px]  rounded-l-md cursor-pointer`}>
           {sett ? (
             <FaXmark className='animate-spin' />
           ) : (
@@ -474,25 +510,41 @@ setSelectCv(i)
           )}
         </div>
 
-        <div className={`${mode==="dark"?"bg-slate-900 shadow-gray-600":"bg-white shadow-slate-500"} w-[250px] shadow-md  rounded-sm p-2`}>
-          <p className={`${mode==="dark"?" text-white":"text-black"} font-black  p-2 text-center`}>SELECT DEMO: </p>
-          <div ref={settIngImgRef}  className=' flex justify-evenly '>
-          <img onClick={(e)=>{
-            settingImgScale(e,1)
-          }}
+        <div
+          className={`${
+            mode === "dark"
+              ? "bg-slate-900 shadow-gray-600"
+              : "bg-white shadow-slate-500"
+          } w-[250px] shadow-md  pointer-events-auto  rounded-sm p-2`}>
+          <p
+            className={`${
+              mode === "dark" ? " text-white" : "text-black"
+            } font-black  p-2 text-center`}>
+            SELECT DEMO:{" "}
+          </p>
+          <div ref={settIngImgRef} className=' flex justify-evenly '>
+            <img
+              onClick={e => {
+                settingImgScale(e, 1);
+              }}
               className=' scale-50 cursor-pointer rounded-sm w-[45%]  shadow-md shadow-gray-600  object-cover'
               src='/jspdf2.png'
             />
-            <img  onClick={(e)=>{
-            settingImgScale(e,2)
-          }}
+            <img
+              onClick={e => {
+                settingImgScale(e, 2);
+              }}
               className=' cursor-pointer rounded-sm w-[45%]   object-cover'
               src='/cvtem.jpg'
             />
-          
           </div>
           <div className='p-2'>
-            <p className={`${mode==="dark"?" text-white":" text-black"} text-center p-2 font-black`}>COLOR SWITCHER </p>
+            <p
+              className={`${
+                mode === "dark" ? " text-white" : " text-black"
+              } text-center p-2 font-black`}>
+              COLOR SWITCHER{" "}
+            </p>
             <div
               ref={bgBoxRef}
               className=' flex gap-1 p-2 w-full justify-evenly items-center'>
@@ -541,12 +593,19 @@ setSelectCv(i)
                 className=' cursor-pointer w-[30px] h-[30px] bg-purple-500'></div>
             </div>
           </div>
-          <div ref={themeRef} className=" w-full p-2 parentShadow">
-            <p className={`${mode==="dark"?" text-white":" text-black"} font-bold p-2`}>CHANGE THEME</p>
-                <div className="  shadow  w-[70px] h-[30px] rounded-full  relative flex justify-center items-center">
-                  <i onClick={theme} className="   absolute w-[25px] h-[25px] rounded-full childShadow  "></i>
-                </div>
-         </div>
+          <div ref={themeRef} className=' w-full p-2 parentShadow'>
+            <p
+              className={`${
+                mode === "dark" ? " text-white" : " text-black"
+              } font-bold p-2`}>
+              CHANGE THEME
+            </p>
+            <div className='  shadow  w-[70px] h-[30px] rounded-full  relative flex justify-center items-center'>
+              <i
+                onClick={theme}
+                className='   absolute w-[25px] h-[25px] rounded-full childShadow  '></i>
+            </div>
+          </div>
           <div>
             <div>
               <p className='p-2 text-3xl'>
@@ -557,13 +616,16 @@ setSelectCv(i)
               ) : (
                 <div
                   onClick={logout}
-                  className={`${mode==="dark"?" bg-slate-700 shadow-gray-500 text-white":"bg-slate-300 shadow-gray-300 "} cursor-pointer font-bold text-center mx-auto rounded-md shadow-lg  p-2  w-11/12`}>
+                  className={`${
+                    mode === "dark"
+                      ? " bg-slate-700 shadow-gray-500 text-white"
+                      : "bg-slate-300 shadow-gray-300 "
+                  } cursor-pointer font-bold text-center mx-auto rounded-md shadow-lg  p-2  w-11/12`}>
                   LOG OUT
                 </div>
               )}
             </div>
           </div>
-         
         </div>
       </div>
     </div>

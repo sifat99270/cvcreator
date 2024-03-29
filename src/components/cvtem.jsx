@@ -50,6 +50,9 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
       if (data["status"] === "success") {
         setName("");
         success("data create");
+       
+          scaleRef.current.classList.replace("scale-1", "scale-0");
+        
         all.push(data["data"]);
       } else {
         error("data create fail");

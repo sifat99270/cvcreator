@@ -413,7 +413,7 @@ export default function Jspdf2({ data }) {
                                   fontWeight: "black",
                                   width: "50%",
                                 }}>
-                                {item["city"]}
+                                {item["city"]},{item['state']}
                               </Text>
                             </View>
                           </View>
