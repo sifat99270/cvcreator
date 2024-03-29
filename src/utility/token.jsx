@@ -6,7 +6,7 @@ export async function CreateToken(email, id) {
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(process.env.JWT_ISSUER)
-    .setExpirationTime(new Date(Date.now() + 24 * 60 * 60 * 1000))
+    .setExpirationTime(new Date(Date.now() + 72 * 60 * 60 * 1000))
     .sign(secret);
   return token;
 }

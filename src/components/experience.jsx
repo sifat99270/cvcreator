@@ -9,7 +9,7 @@ import { success, error } from "@/utility/toast";
 import { alldata } from "./store/allstore";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { verifyDate, verifyName } from "./regex";
+import { verifyDate, verifyMonthDate, verifyName } from "./regex";
 import { HiPlusSm } from "react-icons/hi";
 import { MdBrowserUpdated } from "react-icons/md";
 export default function Experience({
@@ -324,6 +324,7 @@ export default function Experience({
           <p className=' py-2'>End Date:</p>
           <input value={obj['end']}
             onChange={e => {
+            
               change("end", e.target.value);
             }}
             type='date'

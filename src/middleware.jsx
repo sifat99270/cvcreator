@@ -17,6 +17,10 @@ export default async function middleware(req, res) {
     if (path.startsWith("/api/all/alldata")) {
       return NextResponse.next();
     }
+    const token=req.cookies.get('token');
+    if(token){
+      req.cookies.delete("token");
+    }
     if(path==='/'){
            return NextResponse.redirect(new URL("/auth", req.url));
     }

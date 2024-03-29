@@ -3,6 +3,15 @@ import { create } from "zustand";
 
 export const alldata = create((set) => ({
   mode:"light",
+  selectCv:1,
+  setSelectCv:(num)=>{
+    set((pre)=>{
+      pre.selectCv=num;
+      return{
+        ...pre
+      }
+    })
+  },
   cvdata: [],
   select: [],
   addToCvData: (data) => {

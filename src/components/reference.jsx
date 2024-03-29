@@ -14,6 +14,7 @@ import { alldata } from "./store/allstore";
 import ReactPdf from "./jspdf";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { verifyEmail, verifyName, verifyNumber } from "./regex";
+import Jspdf2 from "./jspdf2";
 export default function Reference({ scrollLeft, data, pageno }) {
   const [obj, setObj] = useState({
     name: "",
@@ -30,19 +31,26 @@ export default function Reference({ scrollLeft, data, pageno }) {
   const loadRef = useRef();
   const [delIndex, setDelIndex] = useState(null);
   const [test, setTest] = useState(false);
-  const [generateCvData,setGenerateCvData]=useState({});
-  const { select, updateArray, deleteArray, dataUpdateArray, cvdata,mode } = alldata(
-    (state) => {
-      return {
-        updateArray: state.updateArray,
-        select: state.select,
-        deleteArray: state.deleteArray,
-        dataUpdateArray: state.dataUpdateArray,
-        cvdata: state.cvdata,
-        mode:state.mode
-      };
-    }
-  );
+  const [generateCvData, setGenerateCvData] = useState({});
+  const {
+    select,
+    updateArray,
+    deleteArray,
+    dataUpdateArray,
+    cvdata,
+    mode,
+    selectCv,
+  } = alldata(state => {
+    return {
+      updateArray: state.updateArray,
+      select: state.select,
+      deleteArray: state.deleteArray,
+      dataUpdateArray: state.dataUpdateArray,
+      cvdata: state.cvdata,
+      mode: state.mode,
+      selectCv: state.selectCv,
+    };
+  });
   useEffect(() => {
     setTest(false);
     if (
@@ -72,7 +80,7 @@ export default function Reference({ scrollLeft, data, pageno }) {
     }
   }, [select]);
   function change(name, value) {
-    return setObj((pre) => {
+    return setObj(pre => {
       return {
         ...pre,
         [name]: value,
@@ -216,41 +224,52 @@ export default function Reference({ scrollLeft, data, pageno }) {
   }
 
   function genaratePdf() {
-  setTest(true);
+    setTest(true);
   }
   return (
-    <div className={`${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"}   flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm`}>
-      <div ref={loadRef} className=" scale-0 absolute top-1/2 left-1/2">
+    <div
+      className={`${
+        mode === "dark"
+          ? " bg-gray-900 shadow-slate-600"
+          : " bg-white shadow-slate-300"
+      }   flex flex-col justify-center items-center relative text-sky-400 p-2 shadow-md rounded-sm`}>
+      <div ref={loadRef} className=' scale-0 absolute top-1/2 left-1/2'>
         <Load />
       </div>
       <div
         ref={scaleRef}
-        className={`${mode==="dark"? " bg-neutral-500 shadow-gray-600":"bg-sky-100 shadow-gray-300"}  absolute scale-0 flex flex-col justify-center items-center  p-2 shadow-lg h-[100px]  rounded-md w-[300px]`}
-      >
+        className={`${
+          mode === "dark"
+            ? " bg-neutral-500 shadow-gray-600"
+            : "bg-sky-100 shadow-gray-300"
+        }  absolute scale-0 flex flex-col justify-center items-center  p-2 shadow-lg h-[100px]  rounded-md w-[300px]`}>
         <p>Do You Want To Delete This Item</p>
-        <div className="  mt-3 flex justify-evenly items-center gap-4">
+        <div className='  mt-3 flex justify-evenly items-center gap-4'>
           <div
             onClick={() => {
               del(delIndex);
             }}
-            className=" cursor-pointer rounded-md py-1 px-2 bg-lime-200"
-          >
+            className=' cursor-pointer rounded-md py-1 px-2 bg-lime-200'>
             YES
           </div>
           <div
             onClick={scaleUpDown}
-            className=" cursor-pointer rounded-md py-1 px-2 bg-teal-200"
-          >
+            className=' cursor-pointer rounded-md py-1 px-2 bg-teal-200'>
             NO
           </div>
         </div>
       </div>
-      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"}  rounded-md mx-auto w-[90%] p-3 flex justify-start gap-2 font-bold items-center`}>
-        <div className=" text-2xl">
+      <div
+        className={`${
+          mode === "dark"
+            ? " bg-slate-400 text-gray-500"
+            : "bg-cyan-400 text-white"
+        }  rounded-md mx-auto w-[90%] p-3 flex justify-start gap-2 font-bold items-center`}>
+        <div className=' text-2xl'>
           {" "}
           <CiLight />
         </div>
-        <p className="text-xs md:text-base">
+        <p className='text-xs md:text-base'>
           Referees
           <br />
           Showcase your Referees to an employer
@@ -262,31 +281,48 @@ export default function Reference({ scrollLeft, data, pageno }) {
           return (
             <div
               key={item["id"] ? item["id"] : i}
-              className={`${mode==='dark'?" bg-gray-600":"bg-white shadow-gray-200 "} mt-3 w-3/4 gap-2 mx-auto  shadow-md  rounded-md p-2 flex justify-start items-center`}
-            >
-              <div className=" w-1/2">
-                <div className={`${mode==="dark"?" text-gray-400":"text-violet-500"} font-bold text-sm `}>
-                  <p className=" font-bold uppercase ">{item['name']}</p>
-                  <p className=" font-light">
-                    {item['companyName']}<span className={`${mode==="dark"?" text-slate-800":"text-green-400"}`}> {item['position']}</span>
+              className={`${
+                mode === "dark" ? " bg-gray-600" : "bg-white shadow-gray-200 "
+              } mt-3 w-3/4 gap-2 mx-auto  shadow-md  rounded-md p-2 flex justify-start items-center`}>
+              <div className=' w-1/2'>
+                <div
+                  className={`${
+                    mode === "dark" ? " text-gray-400" : "text-violet-500"
+                  } font-bold text-sm `}>
+                  <p className=' font-bold uppercase '>{item["name"]}</p>
+                  <p className=' font-light'>
+                    {item["companyName"]}
+                    <span
+                      className={`${
+                        mode === "dark" ? " text-slate-800" : "text-green-400"
+                      }`}>
+                      {" "}
+                      {item["position"]}
+                    </span>
                   </p>
                 </div>
               </div>
-              <div className=" flex gap-3">
+              <div className=' flex gap-3'>
                 <div
                   onClick={() => {
                     editting(i);
                   }}
-                  className={`${mode==="dark"?" bg-slate-900 text-gray-300":"bg-indigo-400 text-black"} py-1 cursor-pointer px-2   rounded-sm`}
-                >
+                  className={`${
+                    mode === "dark"
+                      ? " bg-slate-900 text-gray-300"
+                      : "bg-indigo-400 text-black"
+                  } py-1 cursor-pointer px-2   rounded-sm`}>
                   <MdEdit />
                 </div>
                 <div
                   onClick={() => {
                     scaleUpDown(i);
                   }}
-                  className={`${mode==="dark"?" bg-neutral-800 text-gray-400":"text-black bg-purple-300"} py-1  cursor-pointer px-2  rounded-sm`}
-                >
+                  className={`${
+                    mode === "dark"
+                      ? " bg-neutral-800 text-gray-400"
+                      : "text-black bg-purple-300"
+                  } py-1  cursor-pointer px-2  rounded-sm`}>
                   <MdDelete />
                 </div>
               </div>
@@ -294,94 +330,118 @@ export default function Reference({ scrollLeft, data, pageno }) {
           );
         })}
       {decition ? (
-        <div className=" flex flex-wrap justify-center items-center">
-          <div className=" w-[300px] p-2">
-            <p className=" py-2">Full Name</p>
+        <div className=' flex flex-wrap justify-center items-center'>
+          <div className=' w-[300px] p-2'>
+            <p className=' py-2'>Full Name</p>
             <input
               value={obj["name"]}
-              onChange={(e) => {
+              onChange={e => {
                 change("name", e.target.value);
               }}
-              type="text"
-              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+              type='text'
+              className={`${
+                mode === "dark"
+                  ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                  : "text-black border-indigo-400 focus:border-indigo-600 "
+              } border  p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
 
-          <div className=" w-[300px] p-2">
-            <p className=" py-2">Position</p>
+          <div className=' w-[300px] p-2'>
+            <p className=' py-2'>Position</p>
             <input
               value={obj["position"]}
-              onChange={(e) => {
+              onChange={e => {
                 change("position", e.target.value);
               }}
-              type="text"
-              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none f rounded-md font-bold `}
+              type='text'
+              className={`${
+                mode === "dark"
+                  ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                  : "text-black border-indigo-400 focus:border-indigo-600 "
+              } border  p-[8px] outline-none f rounded-md font-bold `}
             />
           </div>
-          <div className=" w-[300px] p-2">
-            <p className=" py-2">Mobile</p>
+          <div className=' w-[300px] p-2'>
+            <p className=' py-2'>Mobile</p>
             <input
               value={obj["mobile"]}
-              onChange={(e) => {
+              onChange={e => {
                 change("mobile", e.target.value);
               }}
-              type="text"
-              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none ounded-md font-bold`}
+              type='text'
+              className={`${
+                mode === "dark"
+                  ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                  : "text-black border-indigo-400 focus:border-indigo-600 "
+              } border  p-[8px] outline-none rounded-md font-bold`}
             />
           </div>
-          <div className=" w-[300px] p-2">
-            <p className=" py-2">Email</p>
+          <div className=' w-[300px] p-2'>
+            <p className=' py-2'>Email</p>
             <input
               value={obj["email"]}
-              onChange={(e) => {
+              onChange={e => {
                 change("email", e.target.value);
               }}
-              type="text"
-              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold`}
+              type='text'
+              className={`${
+                mode === "dark"
+                  ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                  : "text-black border-indigo-400 focus:border-indigo-600 "
+              } border  p-[8px] outline-none  rounded-md font-bold`}
             />
           </div>
-          <div className=" w-[300px] p-2">
-            <p className=" py-2">Company Name</p>
+          <div className=' w-[300px] p-2'>
+            <p className=' py-2'>Company Name</p>
             <input
               value={obj["companyName"]}
-              onChange={(e) => {
+              onChange={e => {
                 change("companyName", e.target.value);
               }}
-              type="text"
-              className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border p-[8px] outline-none  rounded-md font-bold `}
+              type='text'
+              className={`${
+                mode === "dark"
+                  ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                  : "text-black border-indigo-400 focus:border-indigo-600 "
+              } border p-[8px] outline-none  rounded-md font-bold `}
             />
           </div>
         </div>
       ) : null}
-      <div className="  flex-wrap flex justify-evenly w-full  flex-row p-3">
-        <div className="text-xs md:text-base p-2">
+      <div className='  flex-wrap flex justify-evenly w-full  flex-row p-3'>
+        <div className='text-xs md:text-base p-2'>
           <button
             onClick={() => {
               pageno(6);
               scrollLeft(6);
             }}
-            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-          >
+            className={`${
+              mode === "dark" ? " bg-slate-400 text-gray-500" : "bg-rose-300"
+            } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             <TbPlayerTrackPrevFilled />
             Previous
           </button>
         </div>
 
         {decition ? (
-          <div className=" text-xs md:text-base p-2 justify-end items-end">
+          <div className=' text-xs md:text-base p-2 justify-end items-end'>
             {load ? (
-              <div className=" flex">
+              <div className=' flex'>
                 <Load />
               </div>
             ) : update ? (
-              <div className=" text-xs md:text-base flex-wrap flex gap-4">
+              <div className=' text-xs md:text-base flex-wrap flex gap-4'>
                 {" "}
                 <button
                   onClick={() => {
                     updates(obj["ind"]);
                   }}
-                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-                >
+                  className={`${
+                    mode === "dark"
+                      ? " bg-slate-400 text-gray-500"
+                      : "bg-rose-300"
+                  } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
                   <MdBrowserUpdated />
                   Update
                 </button>{" "}
@@ -397,49 +457,90 @@ export default function Reference({ scrollLeft, data, pageno }) {
                       companyName: "",
                     });
                   }}
-                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-                >
+                  className={`${
+                    mode === "dark"
+                      ? " bg-slate-400 text-gray-500"
+                      : "bg-rose-300"
+                  } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
                   <HiPlusSm />
                   Add Section
                 </button>
               </div>
             ) : (
-              <div className=" text-xs md:text-base flex gap-4">
+              <div className=' text-xs md:text-base flex gap-4'>
                 {" "}
-                {allDatas.length<2 && <button
-                  onClick={submit}
-                  className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-                >
-                  <FaSave />
-                  Save
-                </button>}
+                {allDatas.length < 2 && (
+                  <button
+                    onClick={submit}
+                    className={`${
+                      mode === "dark"
+                        ? " bg-slate-400 text-gray-500"
+                        : "bg-rose-300"
+                    } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
+                    <FaSave />
+                    Save
+                  </button>
+                )}
               </div>
             )}
           </div>
         ) : (
-          <div className="text-xs md:text-base p-2">
+          <div className='text-xs md:text-base p-2'>
             <button
               onClick={() => {
                 setDecition(true);
               }}
-              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-            >
+              className={`${
+                mode === "dark"
+                  ? " bg-slate-400 text-gray-500"
+                  : "bg-cyan-400 text-white"
+              } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
               <HiPlusSm />
               Add Secton
             </button>
           </div>
         )}
-        <div className="  text-xs md:text-base p-2">
+        <div className='  text-xs md:text-base p-2'>
           <button
             onClick={genaratePdf}
-            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
-          >
+            className={`${
+              mode === "dark" ? " bg-slate-400 text-gray-500" : "bg-rose-300"
+            } flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             FINISH
             <TbPlayerTrackNextFilled />
           </button>
         </div>
       </div>
-      {test &&  <PDFDownloadLink document={<ReactPdf data={select && cvdata instanceof Array && cvdata.length>0?cvdata[select[1]]:null} />} > download</PDFDownloadLink>}
+      {test && (
+        <PDFDownloadLink
+          className={`${
+            mode === "dark"
+              ? " bg-cyan-300  shadow-slate-300 text-red-50  "
+              : " bg-slate-500  shadow-slate-400 "
+          } p-2 rounded-md font-bold  shadow-md`}
+          document={
+            selectCv === 2 ? (
+              <ReactPdf
+                data={
+                  select && cvdata instanceof Array && cvdata.length > 0
+                    ? cvdata[select[1]]
+                    : null
+                }
+              />
+            ) : (
+              <Jspdf2
+                data={
+                  select && cvdata instanceof Array && cvdata.length > 0
+                    ? cvdata[select[1]]
+                    : null
+                }
+              />
+            )
+          }>
+          {" "}
+          Download Pdf
+        </PDFDownloadLink>
+      )}
     </div>
   );
 }

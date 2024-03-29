@@ -7,6 +7,7 @@ import { TfiEmail } from "react-icons/tfi";
 import Load from "./load";
 import { error, success } from "@/utility/toast";
 import { useRouter } from "next/navigation";
+import { verifyEmail, verifyName, verifyPassword } from "./regex";
 export default function Auth() {
   const regisRef = useRef();
   const loginRef = useRef();
@@ -26,34 +27,51 @@ export default function Auth() {
   });
   async function login() {
     setLoading1(true);
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(logObj),
-      headers: { "content-type": "application/json" },
-    });
-    const data = await res.json();
-    if (data["status"] === "success") {
-      success('login success')
-      router.push("/")
-    } else {
-      error("login fail")
+    if(!verifyEmail(logObj["email"])){
+      error("type a valid email")
+    }else if(!verifyPassword(logObj['password'])){
+      error("password minimum eight characters, at least one letter, one number and one special character ")
+    }else{
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(logObj),
+        headers: { "content-type": "application/json" },
+      });
+      const data = await res.json();
+      if (data["status"] === "success") {
+        success('login success')
+        router.push("/")
+      } else {
+        error("login fail")
+      }
     }
     setLoading1(false);
   }
   async function registration() {
     setLoading2(true);
-    const res = await fetch("/api/auth/registration", {
-      method: "POST",
-      body: JSON.stringify(resObj),
-      headers: { "content-type": "application/json" },
-    });
-    const data = await res.json();
-    if (data["status"] === "success") {
-      success("data create successfull")
-      router.push('/')
-    } else {
-      error('data create fail')
+    if(!verifyName(resObj['name'])){
+      error("type a valid name")
+    }else if(!verifyPassword(resObj['password'])){
+      error("password minimum eight characters, at least one letter, one number and one special character")
+    }else if(resObj['password'] !== resObj['confrim']){
+      error("confirm password do not match")
+    }else if(!verifyEmail(resObj['email'])){
+      error("type a valid email")
+    }else{
+      const res = await fetch("/api/auth/registration", {
+        method: "POST",
+        body: JSON.stringify(resObj),
+        headers: { "content-type": "application/json" },
+      });
+      const data = await res.json();
+      if (data["status"] === "success") {
+        success("data create successfull")
+        router.push('/')
+      } else {
+        error('data create fail')
+      }
     }
+    
     setLoading2(false);
   }
   function changeRes(name, value) {

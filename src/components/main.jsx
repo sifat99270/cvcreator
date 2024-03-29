@@ -38,6 +38,7 @@ export default function Main({ data }) {
   const router = useRouter();
   const [logLoad, setLogLoad] = useState(false);
   const themeRef=useRef();
+  const settIngImgRef=useRef();
   function theme(){
     if(themeRef.current.classList.contains("active")){
       themeRef.current.classList.remove('active')
@@ -47,13 +48,14 @@ export default function Main({ data }) {
       setMode('dark')
     }
   }
-  const { addToCvData, cvdata,setMode,mode  } = alldata(
+  const { addToCvData, cvdata,setMode,mode ,setSelectCv } = alldata(
     state => {
       return {
         addToCvData: state.addToCvData,
         cvdata: state.cvdata,
         setMode:state.setMode,
-        mode:state.mode
+        mode:state.mode,
+        setSelectCv:state.setSelectCv
       };
     }
   );
@@ -120,11 +122,16 @@ export default function Main({ data }) {
       dontDisturb.current.style.pointerEvents = "auto";
       return;
     }
-    allRef.current.childNodes.forEach((item)=>{
+    allRef.current.childNodes.forEach((item,index)=>{
       item.style.minWidth=`${allRef.current.clientWidth}px`
+      if(i===index){
+        // item.style.height=`${item['childNodes'][0]['clientHeight']}px`
+        // // allRef.current.style.height=`${item['childNodes'][0]['clientHeight']}px`
+        // allRef.current.style.minHeight=`${item['childNodes'][0]['clientHeight']}px`
+      }
     })
     allRef.current.scrollLeft = allRef.current.clientWidth * i;
-   
+ 
     allRef.current.scrollTop = 0;
     setColor(i);
     dontDisturb.current.style.pointerEvents = "auto";
@@ -151,10 +158,27 @@ export default function Main({ data }) {
     }
     setLogLoad(false);
   }
+  function settingImgScale(e,i){
+settIngImgRef.current.childNodes.forEach((item)=>{
+  if(item.classList.contains("scale-50")){
+    item.classList.replace("scale-50",'scale-100')
+  }
+}
+)
+if(e.target.classList.contains("scale-100")){
+  e.target.classList.replace("scale-100","scale-50");
+}else if(e.target.classList.contains("scale-50")){
+return;
+}else{
+  e.target.classList.add("scale-50")
+}
+
+setSelectCv(i)
+  }
   return (
     <div
       ref={dontDisturb}
-      className={` overflow-hidden relative w-full h-screen ${
+      className={` overflow-hidden relative w-full  ${
         mode==="dark"?" bg-zinc-700" : !bgColor ? "bg-teal-300" : `${bgColor}`}
       } flex-row flex`}>
       <div className={` ${mode==="dark"?" bg-slate-600 text-white":"bg-white"}  fixed top-0 z-50 md:hidden  w-full `}>
@@ -385,11 +409,11 @@ export default function Main({ data }) {
       </div>
       <div
         ref={allRef}
-        className={`${mode==="dark"?" bg-gray-900":"bg-white"} flex  transition-all    mt-2 md:mt-10  md:ml-4 relative   top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]`}>
+        className={`${mode==="dark"?" bg-gray-900":"bg-white"} flex   transition-all    mt-2 md:mt-10  md:ml-4 relative   top-[120px] md:top-[0px] left-0 overflow-x-hidden  rounded-md w-full md:w-[85%]`}>
         {load ? <Load /> : null}
         <div
           style={{ "--i": 0 }}
-          className='  left-0  top-0   w-full min-w-[100%]  '>
+          className='   left-0  top-0   w-full min-w-[100%] h-auto  '>
           <CV
             pageno={setManageScroll}
             setSelect={setSelect}
@@ -399,7 +423,7 @@ export default function Main({ data }) {
         </div>
         <div
           style={{ "--i": 1 }}
-          className=' min-w-[100%]    top-0 w-full   '>
+          className='  min-w-[100%]    top-0 w-full h-auto   '>
           <Profile pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
         <div
@@ -433,13 +457,13 @@ export default function Main({ data }) {
         </div>
         <div
           style={{ "--i": 7 }}
-          className=' min-w-[100%] top-0  w-full  '>
+          className='  min-w-[100%] top-0  w-full  '>
           <Reference pageno={setManageScroll} scrollLeft={scrollLeft} />
         </div>
       </div>
       <div
         ref={settingRef}
-        className=' transition-all  absolute   -right-[250px] top-[40%] w-[300px]  flex'>
+        className=' transition-all  absolute   -right-[250px] top-[100px] w-[300px]  flex'>
         <div
           onClick={setting}
           className={`${mode==="dark"?" bg-slate-900 shadow-gray-600 text-white":"shadow-slate-500 bg-white"}  shadow-md  rounded-sm  flex justify-center items-center text-2xl w-[50px] h-[50px]  rounded-l-md cursor-pointer`}>
@@ -452,15 +476,20 @@ export default function Main({ data }) {
 
         <div className={`${mode==="dark"?"bg-slate-900 shadow-gray-600":"bg-white shadow-slate-500"} w-[250px] shadow-md  rounded-sm p-2`}>
           <p className={`${mode==="dark"?" text-white":"text-black"} font-black  p-2 text-center`}>SELECT DEMO: </p>
-          <div className=' flex justify-evenly '>
-            <img
-              className=' cursor-pointer rounded-sm w-[45%]  h-[70px] object-cover'
+          <div ref={settIngImgRef}  className=' flex justify-evenly '>
+          <img onClick={(e)=>{
+            settingImgScale(e,1)
+          }}
+              className=' scale-50 cursor-pointer rounded-sm w-[45%]  shadow-md shadow-gray-600  object-cover'
+              src='/jspdf2.png'
+            />
+            <img  onClick={(e)=>{
+            settingImgScale(e,2)
+          }}
+              className=' cursor-pointer rounded-sm w-[45%]   object-cover'
               src='/cvtem.jpg'
             />
-            <img
-              className='cursor-pointer rounded-sm w-[45%]  h-[70px] object-cover'
-              src='/cvtem.jpg'
-            />
+          
           </div>
           <div className='p-2'>
             <p className={`${mode==="dark"?" text-white":" text-black"} text-center p-2 font-black`}>COLOR SWITCHER </p>

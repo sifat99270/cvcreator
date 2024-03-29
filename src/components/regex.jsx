@@ -6,6 +6,8 @@ const summary=/^.{50}/i
 const email=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const date=/^\d{4}(\-|\/)\d\d?(\-|\/)\d\d?$/
 const degree=/^[^(\s-\t)]./
+const monthdate=/^[a-z]\s[\d]{4}$/i
+const password=/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 export const verifyNumber=(text)=>{
 const test=number.test(text);
 return test;
@@ -39,4 +41,10 @@ export const verifyDate=(text)=>{
 export const verifyDegree=(text)=>{
     const test=degree.test(text);
     return test;
+}
+export const verifyMonthDate=(text)=>{
+    return monthdate.test(text)
+}
+export const verifyPassword=(text)=>{
+    return password.test(text);
 }
