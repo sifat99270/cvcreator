@@ -323,7 +323,7 @@ export default function Jspdf2({ data }) {
                                 flexDirection: "row",
                               }}>
                               <Text style={{ fontSize: 10, width: "50%" }}>
-                                chilahati
+                              {item["state"]}
                               </Text>
                               <Text
                                 style={{
@@ -331,7 +331,7 @@ export default function Jspdf2({ data }) {
                                   fontWeight: "black",
                                   width: "50%",
                                 }}>
-                                {item["city"]},{item["state"]}
+                                {item["city"]}
                               </Text>
                             </View>
                           </View>
