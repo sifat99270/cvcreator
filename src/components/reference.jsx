@@ -537,7 +537,6 @@ export default function Reference({ scrollLeft, data, pageno }) {
               />
             )
           }>
-          {" "}
           Download Pdf
         </PDFDownloadLink>
       )}

@@ -10,6 +10,14 @@
 }
 
 @layer utilities {
+  .downover .downoverchild {
+    scale: 0;
+
+  }
+  .downover:hover .downoverchild {
+    scale: 1;
+
+  }
   .text-balance {
     text-wrap: balance;
   }

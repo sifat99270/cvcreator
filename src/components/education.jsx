@@ -420,7 +420,7 @@ export default function Education({
               className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"} flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}
             >
               <HiPlusSm />
-              Add Secton
+              Add Section
             </button>
           </div>
         )}

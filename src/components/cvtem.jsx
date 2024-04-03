@@ -10,9 +10,11 @@ import { error, success } from "@/utility/toast";
 import Load from "./load";
 import { alldata } from "./store/allstore";
 import { verifyName } from "./regex";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Jspdf2 from "./jspdf2";
 function CV({ all, scrollLeft, setSelect, pageno }) {
-  const { addToSelect, mode } = alldata(state => {
-    return { addToSelect: state.addToSelect, mode: state.mode };
+  const { addToSelect, mode,cvdata } = alldata(state => {
+    return { addToSelect: state.addToSelect, mode: state.mode,cvdata:state.cvdata };
   });
   const scaleRef = useRef();
   const [load, setLoad] = useState(false);
@@ -105,7 +107,7 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
         />
         {load ? (
           <div className=' h-[50px] w-[75px] mt-2'>
-            {" "}
+            
             <Load />
           </div>
         ) : (
@@ -152,9 +154,11 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
                     <p>Edit</p>
                     <MdEdit />
                   </div>
-                  <div className={`${mode==="dark"? " shadow-gray-800 border-neutral-700":"shadow-slate-400"} flex gap-1 rounded-md shadow-md  text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
+                  <div className={`${mode==="dark"? "  shadow-gray-800 border-neutral-700":"shadow-slate-400"} downover relative flex gap-1 rounded-md shadow-md  text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
                     <FaCloudDownloadAlt />
+                    <PDFDownloadLink className=" downoverchild  absolute  text-sm px-2 py-1 rounded-md  -bottom-[25px] font-bold text-center w-[120px] bg-stone-800" document={<Jspdf2 data={cvdata[i]} />}  >download cv</PDFDownloadLink>
                   </div>
+               
                   <div className={` ${mode==="dark"? " shadow-gray-800 border-neutral-700":"shadow-slate-400"} flex gap-1 rounded-md shadow-md shadow-slate-400 text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
                     <BsThreeDotsVertical />
                   </div>

@@ -75,22 +75,22 @@ export default function Main({ data }) {
       return;
     }
   }
-  useEffect(() => {
-    async function getData() {
-      const respon = await fetch(`/api/all/alldata`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        cache: "no-store",
-      });
-      const data = await respon.json();
-      if (data["status"] === "success") {
-        addToCvData(data["data"]);
-      } else {
-        return addToCvData([]);
-      }
-    }
-    getData();
-  }, []);
+  // useEffect(() => {
+  // //   async function getData() {
+  // //     const respon = await fetch(`/api/all/alldata`, {
+  // //       method: "POST",
+  // //       headers: { "content-type": "application/json" },
+  // //       cache: "no-store",
+  // //     });
+  // //     const data = await respon.json();
+  // //     if (data["status"] === "success") {
+  // //       addToCvData(data["data"]);
+  // //     } else {
+  // //       return addToCvData([]);
+  // //     }
+  // //   }
+  // //   getData();
+  // // }, []);
   useEffect(() => {
     if (sett) {
       settingRef.current.classList.replace("-right-[250px]", "-right-[0px]");
@@ -99,9 +99,9 @@ export default function Main({ data }) {
     }
   }, [sett]);
 
-  // useEffect(() => {
-  //   addToCvData(data);
-  // }, []);
+  useEffect(() => {
+    addToCvData(data);
+  }, []);
   useEffect(() => {
     window.addEventListener("resize", resizeFun);
     return () => {
@@ -114,7 +114,7 @@ export default function Main({ data }) {
     setColor(i);
   }
   function scrollLeft(i) {
-    dontDisturb.current.style.pointerEvents = "none";
+    // dontDisturb.current.style.pointerEvents = "none";
     if (!select) {
       error("please select an item");
       dontDisturb.current.style.pointerEvents = "auto";
@@ -131,7 +131,7 @@ export default function Main({ data }) {
 
     allRef.current.scrollTop = 0;
     setColor(i);
-    dontDisturb.current.style.pointerEvents = "auto";
+    // dontDisturb.current.style.pointerEvents = "auto";
   }
 
   function bgBox(e) {
@@ -211,7 +211,7 @@ export default function Main({ data }) {
             mode === "dark" ? " text-white" : " text-black"
           } flex justify-between`}>
           <div
-            style={{ "--i": 1 }}
+          
             onClick={() => {
               allRef.current.scrollTop = 0;
               setManageScroll(1);
@@ -534,7 +534,7 @@ export default function Main({ data }) {
               onClick={e => {
                 settingImgScale(e, 2);
               }}
-              className=' cursor-pointer rounded-sm w-[45%]   object-cover'
+              className=' cursor-pointer rounded-sm w-[45%]  shadow-md shadow-gray-600  object-cover'
               src='/cvtem.jpg'
             />
           </div>
@@ -608,7 +608,7 @@ export default function Main({ data }) {
           </div>
           <div>
             <div>
-              <p className='p-2 text-3xl'>
+              <p className={` ${mode==="dark"?"text-white":"text-black"} p-2 text-3xl`}>
                 <CgProfile />
               </p>
               {logLoad ? (
