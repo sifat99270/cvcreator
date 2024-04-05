@@ -51,7 +51,7 @@ export default function Skills({ pageno, scrollleft }) {
     if(update){
       setUpdate(false);
      
-     setObj({ name: "" })
+     setObj({ skill: "", level: "Beginners" })
     }
   }, [select]);
   function add() {
@@ -102,6 +102,10 @@ export default function Skills({ pageno, scrollleft }) {
       if (data["status"] === "success") {
         success("skill deleted");
         deleteArray(select[1], "skills", i);
+        setObj({ skill: "", level: "Beginners" })
+        if(update){
+          setUpdate(false)
+        }
       } else {
         error("skill delete fail");
       }
@@ -170,6 +174,9 @@ export default function Skills({ pageno, scrollleft }) {
       if (data["status"] === "success") {
         success("hobbie deleted");
         deleteArray(select[1], "skills", i);
+        setDecition(false);
+        setUpdate(false);
+        setObj({ skill: "", level: "Beginners" })
       } else {
         error("hobbie delete fail");
       }

@@ -19,7 +19,7 @@ export  async function POST(req, res) {
             otp:''
         }
     })
-    const token=await CreateToken(email,create['id']);
+    const token=await CreateToken(email,create['id'],create['name']);
     const threeDay = 72 * 60 * 60 * 1000
     const cookiee=cookies().set("token",token,{httpOnly:true,expires:Date.now()+threeDay});
     return NextResponse.json({status:"success",data:token})

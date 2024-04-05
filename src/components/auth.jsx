@@ -133,19 +133,19 @@ export default function Auth() {
           land your dream job with ease. Your journey to success starts here.
         </div>
         <div className=' w-[80%] flex flex-col gap-2 mx-auto'>
-          <Link href='#' className=' w-full rounded-md'>
+          <Link href='https://www.facebook.com/sifat.islam.9883739' className=' w-full rounded-md'>
             <div className='  w-full rounded-md bg-green-600 flex justify-center items-center p-2 gap-2 text-white'>
               <FaFacebookF />
               <p>Contact With Facebook</p>
             </div>
           </Link>
-          <Link href='#' className=' w-full rounded-md'>
+          <Link  href='https://wa.me/01302139673' className=' w-full rounded-md'>
             <div className=' w-full rounded-md  bg-cyan-500 flex justify-center items-center p-2 gap-2 text-white'>
               <FaWhatsapp />
               <p>Contact With Whatsapp</p>
             </div>
           </Link>
-          <Link href='#' className=' w-full rounded-md'>
+          <Link href='mailto:rasifat33@gmail.com' className=' w-full rounded-md'>
             <div className=' w-full rounded-md   bg-rose-400 flex justify-center items-center p-2 gap-2 text-white'>
               <TfiEmail />
               <p>Contact With Email</p>
@@ -155,7 +155,7 @@ export default function Auth() {
       </div>
       <div
         ref={mainRef}
-        className=' shadow-md shadow-gray-400 overflow-hidden mx-auto flex relative w-full md:w-1/2 bg-gray-300  blur-0 rounded-md'>
+        className=' scroll-smooth shadow-md shadow-gray-400 overflow-hidden mx-auto flex relative w-full md:w-1/2 bg-gray-300  blur-0 rounded-md'>
         <div
           ref={loginRef}
           className=' transition-all scale-0 absolute top-2 w-full flex gap-3 justify-center items-center flex-col  '>

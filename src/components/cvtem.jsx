@@ -12,9 +12,15 @@ import { alldata } from "./store/allstore";
 import { verifyName } from "./regex";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Jspdf2 from "./jspdf2";
+import ReactPdf from "./jspdf";
 function CV({ all, scrollLeft, setSelect, pageno }) {
-  const { addToSelect, mode,cvdata } = alldata(state => {
-    return { addToSelect: state.addToSelect, mode: state.mode,cvdata:state.cvdata };
+  const { addToSelect, mode, cvdata, selectCv } = alldata(state => {
+    return {
+      addToSelect: state.addToSelect,
+      mode: state.mode,
+      cvdata: state.cvdata,
+      selectCv: state.selectCv,
+    };
   });
   const scaleRef = useRef();
   const [load, setLoad] = useState(false);
@@ -52,9 +58,9 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
       if (data["status"] === "success") {
         setName("");
         success("data create");
-       
-          scaleRef.current.classList.replace("scale-1", "scale-0");
-        
+
+        scaleRef.current.classList.replace("scale-1", "scale-0");
+
         all.push(data["data"]);
       } else {
         error("data create fail");
@@ -65,14 +71,25 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
   }
 
   return (
-    <div className={` ${mode==="dark"?" bg-gray-900":"bg-white"} w-full flex justify-evenly relative gap-4 flex-wrap  p-2`}>
+    <div
+      className={` ${
+        mode === "dark" ? " bg-gray-900" : "bg-white"
+      } w-full flex justify-evenly relative gap-4 flex-wrap  p-2`}>
       <div
         onClick={scaleOpen}
-        className={` w-[300px] h-36 p-2 rounded-md cursor-pointer flex items-center shadow-md justify-evenly ${mode==='dark' ? "shadow-slate-600 " :" bg-white  shadow-slate-200"} `}>
-        <div className={`${mode==='dark'? "text-white":"text-black"} text-2xl`}>
+        className={` w-[300px] h-36 p-2 rounded-md cursor-pointer flex items-center shadow-md justify-evenly ${
+          mode === "dark" ? "shadow-slate-600 " : " bg-white  shadow-slate-200"
+        } `}>
+        <div
+          className={`${
+            mode === "dark" ? "text-white" : "text-black"
+          } text-2xl`}>
           <AiOutlinePlus />
         </div>
-        <p className={` ${mode==="dark"?"text-white":"text-black"} font-bold p-2 text-center `}>
+        <p
+          className={` ${
+            mode === "dark" ? "text-white" : "text-black"
+          } font-bold p-2 text-center `}>
           create new <br></br>resume
         </p>
       </div>
@@ -107,7 +124,6 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
         />
         {load ? (
           <div className=' h-[50px] w-[75px] mt-2'>
-            
             <Load />
           </div>
         ) : (
@@ -131,12 +147,14 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
           return (
             <div
               key={item["id"]}
-              className={` ${
-                track === i ? "scale-50" : "scale-100"
-              } ${mode==="dark" ? "shadow-slate-600":"shadow-gray-400"} h-[120px] w-[300px] shadow-md  rounded-md flex  `}>
+              className={` ${track === i ? "scale-50" : "scale-100"} ${
+                mode === "dark" ? "shadow-slate-600" : "shadow-gray-400"
+              } h-[120px] w-[300px] shadow-md  rounded-md flex  `}>
               <div className=' w-[50%] h-full flex justify-center items-center'>
                 <img
-                  className={` ${mode==="dark"?"shadow-slate-400":"shadow-slate-300"} w-full h-full object-cover rounded-md shadow-md  p-2`}
+                  className={` ${
+                    mode === "dark" ? "shadow-slate-400" : "shadow-slate-300"
+                  } w-full h-full object-cover rounded-md shadow-md  p-2`}
                   src='/cvtem.jpg'
                 />
               </div>
@@ -150,16 +168,56 @@ function CV({ all, scrollLeft, setSelect, pageno }) {
                       select(i);
                       setTrack(i);
                     }}
-                    className={` ${mode==="dark"? " shadow-gray-800 border-neutral-700":"shadow-slate-400"}  flex gap-1 rounded-md shadow-md   text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
+                    className={` ${
+                      mode === "dark"
+                        ? " shadow-gray-800 border-neutral-700"
+                        : "shadow-slate-400"
+                    }  flex gap-1 rounded-md shadow-md   text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
                     <p>Edit</p>
                     <MdEdit />
                   </div>
-                  <div className={`${mode==="dark"? "  shadow-gray-800 border-neutral-700":"shadow-slate-400"} downover relative flex gap-1 rounded-md shadow-md  text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
+                  <div
+                    className={`${
+                      mode === "dark"
+                        ? "  shadow-gray-800 border-neutral-700"
+                        : "shadow-slate-400"
+                    } downover relative flex gap-1 rounded-md shadow-md  text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
                     <FaCloudDownloadAlt />
-                    <PDFDownloadLink className=" downoverchild  absolute  text-sm px-2 py-1 rounded-md  -bottom-[25px] font-bold text-center w-[120px] bg-stone-800" document={<Jspdf2 data={cvdata[i]} />}  >download cv</PDFDownloadLink>
+                    <PDFDownloadLink
+                      className=' downoverchild  absolute  text-sm px-2 py-1 rounded-md  -bottom-[25px] font-bold text-center w-[120px] bg-stone-800'
+                      document={
+                        selectCv === 2 ? (
+                          <ReactPdf
+                            data={
+                              select &&
+                              cvdata instanceof Array &&
+                              cvdata.length > 0
+                                ? cvdata[i]
+                                : null
+                            }
+                          />
+                        ) : (
+                          <Jspdf2
+                            data={
+                              select &&
+                              cvdata instanceof Array &&
+                              cvdata.length > 0
+                                ? cvdata[i]
+                                : null
+                            }
+                          />
+                        )
+                      }>
+                      download cv
+                    </PDFDownloadLink>
                   </div>
-               
-                  <div className={` ${mode==="dark"? " shadow-gray-800 border-neutral-700":"shadow-slate-400"} flex gap-1 rounded-md shadow-md shadow-slate-400 text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
+
+                  <div
+                    className={` ${
+                      mode === "dark"
+                        ? " shadow-gray-800 border-neutral-700"
+                        : "shadow-slate-400"
+                    } flex gap-1 rounded-md shadow-md shadow-slate-400 text-emerald-400 border p-1 justify-center items-center cursor-pointer`}>
                     <BsThreeDotsVertical />
                   </div>
                 </div>

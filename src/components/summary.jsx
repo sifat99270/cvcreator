@@ -104,7 +104,7 @@ export default function Summary({ scrollleft, pageno }) {
       <div className=" flex flex-wrap justify-center items-center">
         <div className=" w-full p-2">
           <p className=" py-2">Summary</p>
-          <input
+          <textarea
             value={obj["text"]}
             onChange={(e) => {
               change("text", e.target.value);

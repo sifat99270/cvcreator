@@ -114,6 +114,11 @@ export default function Hobbies({ pageno, scrollLeft }) {
       if (data["status"] === "success") {
         success("hobbie deleted");
         deleteArray(select[1], "hobbies", i);
+       setDecition(false)
+       setObj({name:""});
+       if(update){
+        setUpdate(false)
+      }
       } else {
         error("hobbie delete fail");
       }

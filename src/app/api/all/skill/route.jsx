@@ -8,7 +8,6 @@ export async function POST(req, res) {
     const body = await req.json();
     const skill = body["skill"];
     const level = body["level"];
-
     const mainId = body["mainId"];
     const header = headers();
     const id = parseInt(header.get("id"));
@@ -21,7 +20,7 @@ export async function POST(req, res) {
     });
     return NextResponse.json({ status: "success", data: create });
   } catch (e) {
-    
+   
     return NextResponse.json({ status: "fail", data: e });
   }
 }

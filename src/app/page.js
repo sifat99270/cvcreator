@@ -1,8 +1,8 @@
 
 import Load from "@/components/load";
 import Main from "@/components/main";
-import { data } from "autoprefixer";
-import { headers } from "next/headers";
+import { VerifyToken } from "@/utility/token";
+import { cookies, headers } from "next/headers";
 import { Suspense } from "react";
 async function getAllData(){
   const header= headers();
@@ -17,12 +17,14 @@ const respon=await fetch( `${process.env.HOST}/api/all/alldata`,{method:"POST",h
 }
 
 export default async function Home() {
-  
+  const cookie=cookies().get('token');
+  const verify=await VerifyToken(cookie['value']);
+  const name=verify['name']
   const all=await getAllData();
    return (
     <main className=" w-full" >
      <Suspense fallback={<div className=" w-full h-screen flex justify-center items-center"><Load /></div>}>
-     <Main data={all}  />
+     <Main person={name}  data={all}  />
      </Suspense>
     </main>
   );

@@ -334,7 +334,7 @@ export default function Experience({
         </div>
         <div className=' min-w-[90%] p-2'>
           <p className=' py-2'>Description</p>
-          <input
+          <textarea
             value={obj["employer"]}
             onChange={e => {
               change("employer", e.target.value);

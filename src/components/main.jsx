@@ -24,7 +24,7 @@ import { BsGear } from "react-icons/bs";
 import { FaXmark } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/navigation";
-export default function Main({ data }) {
+export default function Main({ data,person }) {
   const allRef = useRef();
   const [manageScroll, setManageScroll] = useState(0);
   const [color, setColor] = useState(0);
@@ -174,7 +174,7 @@ export default function Main({ data }) {
   return (
     <div
       ref={dontDisturb}
-      className={` overflow-x-hidden  relative w-full  ${
+      className={`  overflow-x-hidden md:h-screen  relative w-full  ${
         mode === "dark"
           ? " bg-zinc-700"
           : !bgColor
@@ -184,7 +184,7 @@ export default function Main({ data }) {
       } flex-row flex`}>
       <div
         className={` ${
-          mode === "dark" ? " bg-slate-600 text-white" : "bg-white"
+          mode === "dark" ? "  bg-slate-600 text-white" : "bg-white"
         }  fixed top-0 z-50 md:hidden  w-full `}>
         <div className=' w-[100%]  flex justify-center items-center  '>
           <div className=' ml-4'>
@@ -535,7 +535,7 @@ export default function Main({ data }) {
                 settingImgScale(e, 2);
               }}
               className=' cursor-pointer rounded-sm w-[45%]  shadow-md shadow-gray-600  object-cover'
-              src='/cvtem.jpg'
+              src='/demo2.png'
             />
           </div>
           <div className='p-2'>
@@ -608,8 +608,8 @@ export default function Main({ data }) {
           </div>
           <div>
             <div>
-              <p className={` ${mode==="dark"?"text-white":"text-black"} p-2 text-3xl`}>
-                <CgProfile />
+              <p className={` ${mode==="dark"?"text-white":"text-black"} flex gap-2 justify-start items-center p-2 text-3xl`}>
+                <CgProfile /><span className={` ${mode==="dark"?" text-white":" text-black"} font-bold text-lg`}>{person}</span>
               </p>
               {logLoad ? (
                 <Load />

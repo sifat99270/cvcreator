@@ -1,8 +1,8 @@
 import { SignJWT, jwtVerify } from "jose";
 
-export async function CreateToken(email, id) {
+export async function CreateToken(email, id,name) {
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  const payload = { email: email, id: id };
+  const payload = { email: email, id: id,name:name };
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(process.env.JWT_ISSUER)
@@ -11,6 +11,7 @@ export async function CreateToken(email, id) {
   return token;
 }
 export async function VerifyToken(token) {
+
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
   const data = await jwtVerify(token, secret);
   return data["payload"];

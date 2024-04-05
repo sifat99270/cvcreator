@@ -16,9 +16,9 @@ export  async function POST(req, res) {
         }
     })
 
-    const token=await CreateToken(email,find['id']);
+    const token=await CreateToken(email,find['id'],find['name']);
     const threeDay = 72 * 60 * 60 * 1000
-    const cookiee=cookies().set("token",token,{httpOnly:true,expires:Date.now()+threeDay});
+    const cookie=cookies().set("token",token,{httpOnly:true,expires:Date.now()+threeDay});
     return NextResponse.json({status:"success",data:token})
   } catch (e) {
 
