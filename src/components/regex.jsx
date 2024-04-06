@@ -7,7 +7,7 @@ const date = /^\d{4}(\-|\/)\d\d?(\-|\/)\d\d?$/;
 const degree = /^[^(\s-\t)]./;
 const monthdate = /^[a-z]\s[\d]{4}$/i;
 const password =
-  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 const description = /^.{10}/;
 export const verifyDescription = text => {
   const test = description.test(text);
