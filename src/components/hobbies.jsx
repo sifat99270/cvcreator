@@ -1,14 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { CiLight } from "react-icons/ci";
-import { FaSave } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { FaCirclePlus } from "react-icons/fa6";
-import { MdBrowserUpdated } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
-
 import Load from "./load";
 import { error, success } from "@/utility/toast";
 import { alldata } from "./store/allstore";
@@ -16,7 +13,7 @@ import { verifyName } from "./regex";
 export default function Hobbies({ pageno, scrollLeft }) {
   const [obj, setObj] = useState({ name: "" });
   const [alldatas, setAllDatas] = useState([]);
-  const [delIndex,setDelIndex]=useState(null);
+  const [delIndex, setDelIndex] = useState(null);
   const scaleRef = useRef();
   function change(name, value) {
     setObj(pre => {
@@ -46,14 +43,18 @@ export default function Hobbies({ pageno, scrollLeft }) {
     } else {
       setAllDatas([]);
     }
-    setDecition(false)
-    if(update){
+    setDecition(false);
+    if (update) {
       setUpdate(false);
-     
-     setObj({ name: "" })
+
+      setObj({ name: "" });
     }
   }, [select]);
-  function scaleUpDowns(i) {
+  function scaleUpDowns(e, i) {
+    const top = e.clientY;
+    const left = e.clientX;
+    scaleRef.current.style.left = left / 2 + "px";
+    scaleRef.current.style.top = top / 2 + "px";
     if (!load) {
       if (scaleRef.current.classList.contains("scale-0")) {
         setDelIndex(i);
@@ -67,10 +68,9 @@ export default function Hobbies({ pageno, scrollLeft }) {
     }
   }
   function add() {
-  
-      setObj({name: "", });
-      setDecition(true)
-    setUpdate(false)
+    setObj({ name: "" });
+    setDecition(true);
+    setUpdate(false);
   }
   async function submit() {
     if (!load) {
@@ -79,21 +79,21 @@ export default function Hobbies({ pageno, scrollLeft }) {
       if (!verifyName(obj["name"])) {
         error("type a valid hobbie name");
       } else {
-          const res = await fetch("api/all/hobbie", {
-            method: "POST",
-            body: JSON.stringify(obj),
-            headers: { "content-type": "application/json" },
-          });
-          const data = await res.json();
-          if (data["status"] === "success") {
-            success("hobbie create");
-            setDecition(false);
-            updateArray(data["data"], select[1], "hobbies");
-            setObj({name:""});
-          } else {
-            error("hobbie create fail");
-          }
+        const res = await fetch("api/all/hobbie", {
+          method: "POST",
+          body: JSON.stringify(obj),
+          headers: { "content-type": "application/json" },
+        });
+        const data = await res.json();
+        if (data["status"] === "success") {
+          success("hobbie create");
+          setDecition(false);
+          updateArray(data["data"], select[1], "hobbies");
+          setObj({ name: "" });
+        } else {
+          error("hobbie create fail");
         }
+      }
       setLoad(false);
     } else {
       error("please click some times letter");
@@ -114,11 +114,11 @@ export default function Hobbies({ pageno, scrollLeft }) {
       if (data["status"] === "success") {
         success("hobbie deleted");
         deleteArray(select[1], "hobbies", i);
-       setDecition(false)
-       setObj({name:""});
-       if(update){
-        setUpdate(false)
-      }
+        setDecition(false);
+        setObj({ name: "" });
+        if (update) {
+          setUpdate(false);
+        }
       } else {
         error("hobbie delete fail");
       }
@@ -134,8 +134,8 @@ export default function Hobbies({ pageno, scrollLeft }) {
     setObj({ ...alldatas[i], ind: i });
     setUpdate(true);
   }
-  async function Update(track){
-    setLoad(true)
+  async function Update(track) {
+    setLoad(true);
     const all = {
       ...obj,
       mainId: select[0]["id"],
@@ -152,11 +152,11 @@ export default function Hobbies({ pageno, scrollLeft }) {
       dataUpdateArray(data["data"], select[1], "hobbies", track);
       setDecition(false);
       setUpdate(false);
-      setObj({ name: "" })
+      setObj({ name: "" });
     } else {
       error("hobbie update fail");
     }
-    setLoad(false)
+    setLoad(false);
   }
   return (
     <div
@@ -233,8 +233,8 @@ export default function Hobbies({ pageno, scrollLeft }) {
                   <MdEdit />
                 </div>
                 <div
-                  onClick={() => {
-                    scaleUpDowns(index);
+                  onClick={e => {
+                    scaleUpDowns(e, index);
                   }}
                   className={`${
                     mode === "dark"
@@ -264,18 +264,28 @@ export default function Hobbies({ pageno, scrollLeft }) {
                     : "text-black border-indigo-400 focus:border-indigo-600 "
                 } border  p-[8px] outline-none  rounded-md font-bold `}
               />
-             
-            {load ?<div className=" p-2"><Load/></div>:update ? <div
-             onClick={()=>{Update(obj['ind'])}}
-              className=' cursor-pointer ml-1  border border-stone-300 rounded-md py-[2px]  px-1 '>
-              Update
-            </div>: <div
-                onClick={() => {
-                  submit();
-                }}
-                className=' cursor-pointer ml-1  border border-stone-300 rounded-md px-2 '>
+
+              {load ? (
+                <div className=' p-2'>
+                  <Load />
+                </div>
+              ) : update ? (
+                <div
+                  onClick={() => {
+                    Update(obj["ind"]);
+                  }}
+                  className=' cursor-pointer ml-1  border border-stone-300 rounded-md py-[2px]  px-1 '>
+                  Update
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    submit();
+                  }}
+                  className=' cursor-pointer ml-1  border border-stone-300 rounded-md px-2 '>
                   Add
-              </div> }
+                </div>
+              )}
             </div>
           </div>
         </div>

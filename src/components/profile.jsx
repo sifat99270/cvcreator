@@ -21,8 +21,12 @@ export default function Profile({ scrollLeft, pageno }) {
     phone: "",
     email: "",
   });
-  const { select, updateObject,mode } = alldata(state => {
-    return { select: state.select, updateObject: state.updateObject, mode: state.mode };
+  const { select, updateObject, mode } = alldata(state => {
+    return {
+      select: state.select,
+      updateObject: state.updateObject,
+      mode: state.mode,
+    };
   });
 
   useEffect(() => {
@@ -148,8 +152,18 @@ export default function Profile({ scrollLeft, pageno }) {
     setLoad(false);
   }
   return (
-    <div className={` ${mode==="dark"? " bg-gray-900 shadow-slate-600":" bg-white shadow-slate-300"} w-full text-sky-400 p-2 shadow-md rounded-sm `}>
-      <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-cyan-400 text-white"}  rounded-md mx-auto w-[90%]  p-3  flex justify-start gap-2 font-bold items-center `} >
+    <div
+      className={` ${
+        mode === "dark"
+          ? " bg-gray-900 shadow-slate-600"
+          : " bg-white shadow-slate-300"
+      } w-full text-sky-400 p-2 shadow-md rounded-sm `}>
+      <div
+        className={`${
+          mode === "dark"
+            ? " bg-slate-400 text-gray-500"
+            : "bg-cyan-400 text-white"
+        }  rounded-md mx-auto w-[90%]  p-3  flex justify-start gap-2 font-bold items-center `}>
         <div className=' text-2xl'>
           {" "}
           <CiLight />
@@ -169,7 +183,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("name", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -179,7 +197,11 @@ export default function Profile({ scrollLeft, pageno }) {
             onChange={e => {
               change("gender", e.target.value);
             }}
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} w-full outline-none border p-[8px] rounded-md font-bold  `}>
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } w-full outline-none border p-[8px] rounded-md font-bold  `}>
             <option>Male</option>
             <option>Female</option>
             <option>Other</option>
@@ -187,12 +209,17 @@ export default function Profile({ scrollLeft, pageno }) {
         </div>
         <div className=' w-[300px] p-2'>
           <p className=' py-2'>Date of Birth (Optional)</p>
-          <input value={obj['birth']}
+          <input
+            value={obj["birth"]}
             onChange={e => {
               change("birth", e.target.value);
             }}
             type='date'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold  w-full`}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold  w-full`}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -203,7 +230,11 @@ export default function Profile({ scrollLeft, pageno }) {
             onChange={e => {
               change("married", e.target.value);
             }}
-            className={` ${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} w-full outline-none border  p-[8px] rounded-md font-bold  `}>
+            className={` ${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } w-full outline-none border  p-[8px] rounded-md font-bold  `}>
             <option>Single</option>
             <option>Married</option>
           </select>
@@ -216,7 +247,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("profession", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -227,7 +262,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("address", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -238,7 +277,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("city", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -249,7 +292,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("state", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -260,7 +307,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("nationality", e.target.value);
             }}
             type='text'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -271,7 +322,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("phone", e.target.value);
             }}
             type='number'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
         <div className=' w-[300px] p-2'>
@@ -282,7 +337,11 @@ export default function Profile({ scrollLeft, pageno }) {
               change("email", e.target.value);
             }}
             type='email'
-            className={`${mode==="dark"?" text-white bg-gray-700 border-zinc-600 focus:border-zinc-400":"text-black border-indigo-400 focus:border-indigo-600 "} border  p-[8px] outline-none  rounded-md font-bold `}
+            className={`${
+              mode === "dark"
+                ? " text-white bg-gray-700 border-zinc-600 focus:border-zinc-400"
+                : "text-black border-indigo-400 focus:border-indigo-600 "
+            } border  p-[8px] outline-none  rounded-md font-bold `}
           />
         </div>
       </div>
@@ -293,14 +352,19 @@ export default function Profile({ scrollLeft, pageno }) {
               scrollLeft(2);
               pageno(2);
             }}
-            className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"}  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
+            className={`${
+              mode === "dark" ? " bg-slate-400 text-gray-500" : "bg-rose-300"
+            }  flex  py-1 px-2 items-center justify-center gap-1 rounded-sm`}>
             NEXT
             <TbPlayerTrackNextFilled />
           </button>
         </div>
         <div className=' text-xs md:text-base md:w-[300px] p-2'>
           {load ? (
-            <div className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} w-[100px] flex justify-center items-center  h-[50px] rounded-md`}>
+            <div
+              className={`${
+                mode === "dark" ? " bg-slate-400 text-gray-500" : "bg-rose-300"
+              } w-[100px] flex justify-center items-center  h-[50px] rounded-md`}>
               {" "}
               <Load />
             </div>
@@ -309,7 +373,9 @@ export default function Profile({ scrollLeft, pageno }) {
             select[0]["profile"] ? (
             <button
               onClick={updateProfile}
-              className={`${mode==="dark"?" bg-slate-400 text-gray-500":"bg-rose-300"} text-xs md:text-base   flex  py-1 px-2 items-center justify-center gap-1 rounded-sm `}>
+              className={`${
+                mode === "dark" ? " bg-slate-400 text-gray-500" : "bg-rose-300"
+              } text-xs md:text-base   flex  py-1 px-2 items-center justify-center gap-1 rounded-sm `}>
               <FaSave />
               UPDATE
             </button>

@@ -35,7 +35,7 @@ export default function Auth() {
       error("type a valid email");
     } else if (!verifyPassword(logObj["password"])) {
       error(
-        "password minimum eight characters, at least one letter, one number and one special character "
+        "Minimum eight characters, at least one letter and one number"
       );
     } else {
       const res = await fetch("/api/auth/login", {
@@ -59,7 +59,7 @@ export default function Auth() {
       error("type a valid name");
     } else if (!verifyPassword(resObj["password"])) {
       error(
-        "password minimum eight characters, at least one letter, one number and one special character"
+        "Minimum eight characters, at least one letter and one number"
       );
     } else if (resObj["password"] !== resObj["confrim"]) {
       error("confirm password do not match");
@@ -133,19 +133,23 @@ export default function Auth() {
           land your dream job with ease. Your journey to success starts here.
         </div>
         <div className=' w-[80%] flex flex-col gap-2 mx-auto'>
-          <Link href='https://www.facebook.com/sifat.islam.9883739' className=' w-full rounded-md'>
+          <Link
+            href='https://www.facebook.com/sifat.islam.9883739'
+            className=' w-full rounded-md'>
             <div className='  w-full rounded-md bg-green-600 flex justify-center items-center p-2 gap-2 text-white'>
               <FaFacebookF />
               <p>Contact With Facebook</p>
             </div>
           </Link>
-          <Link  href='https://wa.me/01302139673' className=' w-full rounded-md'>
+          <Link href='https://wa.me/01302139673' className=' w-full rounded-md'>
             <div className=' w-full rounded-md  bg-cyan-500 flex justify-center items-center p-2 gap-2 text-white'>
               <FaWhatsapp />
               <p>Contact With Whatsapp</p>
             </div>
           </Link>
-          <Link href='mailto:rasifat33@gmail.com' className=' w-full rounded-md'>
+          <Link
+            href='mailto:rasifat33@gmail.com'
+            className=' w-full rounded-md'>
             <div className=' w-full rounded-md   bg-rose-400 flex justify-center items-center p-2 gap-2 text-white'>
               <TfiEmail />
               <p>Contact With Email</p>

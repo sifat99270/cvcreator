@@ -87,7 +87,11 @@ export default function Reference({ scrollLeft, data, pageno }) {
       };
     });
   }
-  function scaleUpDown(i) {
+  function scaleUpDown(e, i) {
+    const top = e.clientY;
+    const left = e.clientX;
+    scaleRef.current.style.left = left / 2 + "px";
+    scaleRef.current.style.top = top / 2 + "px";
     if (scaleRef.current.classList.contains("scale-0")) {
       setDelIndex(i);
       scaleRef.current.classList.replace("scale-0", "scale-1");
@@ -315,8 +319,8 @@ export default function Reference({ scrollLeft, data, pageno }) {
                   <MdEdit />
                 </div>
                 <div
-                  onClick={() => {
-                    scaleUpDown(i);
+                  onClick={e => {
+                    scaleUpDown(e, i);
                   }}
                   className={`${
                     mode === "dark"

@@ -20,11 +20,10 @@ import { error, success } from "@/utility/toast";
 import { alldata } from "./store/allstore";
 import Load from "./load";
 import { IoSettings } from "react-icons/io5";
-import { BsGear } from "react-icons/bs";
 import { FaXmark } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/navigation";
-export default function Main({ data,person }) {
+export default function Main({ data, person }) {
   const allRef = useRef();
   const [manageScroll, setManageScroll] = useState(0);
   const [color, setColor] = useState(0);
@@ -75,22 +74,7 @@ export default function Main({ data,person }) {
       return;
     }
   }
-  // useEffect(() => {
-  // //   async function getData() {
-  // //     const respon = await fetch(`/api/all/alldata`, {
-  // //       method: "POST",
-  // //       headers: { "content-type": "application/json" },
-  // //       cache: "no-store",
-  // //     });
-  // //     const data = await respon.json();
-  // //     if (data["status"] === "success") {
-  // //       addToCvData(data["data"]);
-  // //     } else {
-  // //       return addToCvData([]);
-  // //     }
-  // //   }
-  // //   getData();
-  // // }, []);
+
   useEffect(() => {
     if (sett) {
       settingRef.current.classList.replace("-right-[250px]", "-right-[0px]");
@@ -121,10 +105,9 @@ export default function Main({ data,person }) {
       return;
     }
     allRef.current.childNodes.forEach((item, index) => {
-      
       item.style.minWidth = `${allRef.current.clientWidth}px`;
-      if(i===index){
-        allRef.current.style.minHeight=`${item['childNodes'][0].clientHeight}px` 
+      if (i === index) {
+        allRef.current.style.minHeight = `${item["childNodes"][0].clientHeight}px`;
       }
     });
     allRef.current.scrollLeft = allRef.current.clientWidth * i;
@@ -211,12 +194,10 @@ export default function Main({ data,person }) {
             mode === "dark" ? " text-white" : " text-black"
           } flex justify-between`}>
           <div
-          
             onClick={() => {
               allRef.current.scrollTop = 0;
               setManageScroll(1);
               scrollLeft(1);
-             
             }}
             className={`${
               color === 1 ? "text-emerald-500" : null
@@ -234,7 +215,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(2);
               scrollLeft(2);
-              
             }}
             className={`${
               color === 2 ? "text-emerald-500" : null
@@ -252,7 +232,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(3);
               scrollLeft(3);
-            
             }}
             className={`${
               color === 3 ? "text-emerald-500" : null
@@ -271,7 +250,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(4);
               scrollLeft(4);
-           
             }}
             className={`${
               color === 4 ? "text-emerald-500" : null
@@ -289,7 +267,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(5);
               scrollLeft(5);
-            
             }}
             className={`${
               color === 5 ? "text-emerald-500" : null
@@ -307,7 +284,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(6);
               scrollLeft(6);
-         
             }}
             className={`${
               color === 6 ? "text-emerald-500" : null
@@ -325,7 +301,6 @@ export default function Main({ data,person }) {
               allRef.current.scrollTop = 0;
               setManageScroll(7);
               scrollLeft(7);
-            
             }}
             className={`${
               color === 7 ? "text-emerald-500" : null
@@ -608,8 +583,17 @@ export default function Main({ data,person }) {
           </div>
           <div>
             <div>
-              <p className={` ${mode==="dark"?"text-white":"text-black"} flex gap-2 justify-start items-center p-2 text-3xl`}>
-                <CgProfile /><span className={` ${mode==="dark"?" text-white":" text-black"} font-bold text-lg`}>{person}</span>
+              <p
+                className={` ${
+                  mode === "dark" ? "text-white" : "text-black"
+                } flex gap-2 justify-start items-center p-2 text-3xl`}>
+                <CgProfile />
+                <span
+                  className={` ${
+                    mode === "dark" ? " text-white" : " text-black"
+                  } font-bold text-lg`}>
+                  {person}
+                </span>
               </p>
               {logLoad ? (
                 <Load />

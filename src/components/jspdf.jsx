@@ -4,13 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  PDFViewer,
   Document,
   Page,
   Image,
   Line,
   Svg,
-  Note,
 } from "@react-pdf/renderer";
 const styles = StyleSheet.create({
   table: {
