@@ -35,7 +35,7 @@ export default function Auth() {
       error("type a valid email");
     } else if (!verifyPassword(logObj["password"])) {
       error(
-        "Minimum eight characters, at least one letter and one number"
+        "Minimum eight characters, at least one letter, one number and one special character"
       );
     } else {
       const res = await fetch("/api/auth/login", {
@@ -59,7 +59,7 @@ export default function Auth() {
       error("type a valid name");
     } else if (!verifyPassword(resObj["password"])) {
       error(
-        "Minimum eight characters, at least one letter and one number"
+        "Minimum eight characters, at least one letter, one number and one special character"
       );
     } else if (resObj["password"] !== resObj["confrim"]) {
       error("confirm password do not match");
